@@ -268,6 +268,19 @@ public class SignUp extends SherlockActivity
         String encryptionTest = Uri.encode(AES.encrypt("WhatsCloud", this));
 
         //---------------------------------
+        // Encryption isn't working?
+        //---------------------------------
+
+        if ( StringUtils.stringIsNullOrEmpty(encryptionTest) )
+        {
+            //---------------------------------
+            // Log error
+            //---------------------------------
+
+            throw new Exception(getString(R.string.encryptionError));
+        }
+
+        //---------------------------------
         // Sign up
         //---------------------------------
 

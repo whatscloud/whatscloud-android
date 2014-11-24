@@ -5,7 +5,9 @@ import android.content.SharedPreferences;
 import android.util.Base64;
 import android.util.Log;
 
+import com.bugsense.trace.BugSenseHandler;
 import com.whatscloud.config.debug.Logging;
+import com.whatscloud.config.reporting.BugSense;
 import com.whatscloud.logic.auth.User;
 import com.whatscloud.utils.objects.Singleton;
 
@@ -136,6 +138,12 @@ public class AES
         }
         catch( Exception exc )
         {
+            //--------------------------------
+            // Send to BugSense
+            //--------------------------------
+
+            BugSenseHandler.sendException(exc);
+
             //--------------------------------
             // Log the error
             //--------------------------------
@@ -275,6 +283,12 @@ public class AES
         }
         catch (Exception exc)
         {
+            //--------------------------------
+            // Send to BugSense
+            //--------------------------------
+
+            BugSenseHandler.sendException(exc);
+            
             //--------------------------------
             // Log the error
             //--------------------------------

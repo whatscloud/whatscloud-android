@@ -60,4 +60,5 @@
     <string name="signUpDescContinuation">You will use these credentials to access your chats online from your computer or tablet device.</string>
     <string name="signInDesc">To sign in to WhatsCloud, enter the account email address and password that you signed up with.</string>
     <string name="placeholderKey">000000</string>
+    <string name="encryptionError">An error occurred while encrypting your data. Please contact us at whatscloudapp@gmail.com to get help.</string>
 </resources>
