@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.whatscloud"
+          android:versionCode="10020"
+          android:versionName="1.0.2"
+          android:installLocation="internalOnly">
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.ACCESS_SUPERUSER"/>
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="com.whatscloud.gcm.permission.C2D_MESSAGE" />
+
+    <permission android:name="com.whatscloud.gcm.permission.C2D_MESSAGE"
+                android:protectionLevel="signature" />
+
+    <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="19" />
+    <application
+            android:name=".logic.global.App"
+            android:label="@string/whatscloud"
+            android:icon="@drawable/ic_launcher">
+        <activity android:name="com.whatscloud.activities.Main"
+                  android:launchMode="singleTask"
+                  android:windowSoftInputMode="stateHidden"
+                  android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"
+                  android:theme="@style/Theme.WhatsCloud"
+                  android:label="@string/whatscloud">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name="com.whatscloud.activities.Splash"
+                  android:launchMode="singleTask"
+                  android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"
+                  android:label="@string/whatscloud"
+                  android:theme="@style/Theme.WhatsCloud"
+                  android:windowSoftInputMode="stateHidden|adjustResize">
+        </activity>
+        <activity android:name=".activities.SignIn"
+                  android:launchMode="singleTask"
+                  android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"
+                  android:label="@string/titleSignIn"
+                  android:theme="@style/Theme.WhatsCloud"
+                  android:windowSoftInputMode="stateHidden|adjustResize">
+        </activity>
+        <activity android:name="com.whatscloud.activities.recovery.RequestCode"
+                  android:launchMode="singleTask"
+                  android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"
+                  android:label="@string/resetPassword"
+                  android:theme="@style/Theme.WhatsCloud"
+                  android:windowSoftInputMode="stateHidden|adjustResize">
+        </activity>
+        <activity android:name="com.whatscloud.activities.recovery.VerifyCode"
+                  android:launchMode="singleTask"
+                  android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"
+                  android:label="@string/resetPassword"
+                  android:theme="@style/Theme.WhatsCloud"
+                  android:windowSoftInputMode="stateHidden|adjustResize">
+        </activity>
+        <activity android:name="com.whatscloud.activities.recovery.ResetPassword"
+                  android:launchMode="singleTask"
+                  android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"
+                  android:label="@string/resetPassword"
+                  android:theme="@style/Theme.WhatsCloud"
+                  android:windowSoftInputMode="stateHidden|adjustResize">
+        </activity>
+        <activity android:name=".activities.SignUp"
+                  android:launchMode="singleTask"
+                  android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"
+                  android:label="@string/titleSignUp"
+                  android:theme="@style/Theme.WhatsCloud"
+                  android:windowSoftInputMode="stateHidden|adjustPan">
+        </activity>
+        <receiver
+                android:name="com.whatscloud.GCM"
+                android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="com.whatscloud" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.whatscloud.services.SyncScheduler">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+        <service android:name=".services.SyncOperation">
+        </service>
+        <activity android:name="com.google.ads.AdActivity"
+                  android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
+    </application>
+</manifest>

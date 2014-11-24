@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.WhatsCloud" parent="Theme.Sherlock.Light.DarkActionBar">
+        <item name="actionBarStyle">@style/Widget.WhatsCloud.ActionBar</item>
+        <item name="android:actionBarStyle">@style/Widget.WhatsCloud.ActionBar</item>
+        <item name="android:selectableItemBackground">@null</item>
+        <item name="android:actionBarItemBackground">@null</item>
+        <item name="actionBarItemBackground">@null</item>
+        <item name="android:icon">@drawable/ic_actionbar_logo</item>
+    </style>
+    <style name="Widget.WhatsCloud.DropDownListView" parent="android:Widget.ListView.DropDown">
+        <item name="android:cacheColorHint">@android:color/transparent</item>
+    </style>
+    <style name="Widget.WhatsCloud.ActionBar" parent="Widget.Sherlock.Light.ActionBar.Solid.Inverse">
+        <item name="background">@drawable/bg_actionbar</item>
+        <item name="android:background">@drawable/bg_actionbar</item>
+    </style>
+</resources>
