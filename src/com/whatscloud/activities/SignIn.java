@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -86,6 +87,7 @@ public class SignIn extends SherlockActivity
         // without weird font
         //-----------------------------
 
+        mPassword.setTypeface(Typeface.DEFAULT);
         mPassword.setTransformationMethod(new PasswordTransformationMethod());
 
         //-----------------------------
@@ -191,7 +193,7 @@ public class SignIn extends SherlockActivity
         // Add refresh in Action Bar
         //----------------------------
 
-        mLoading = optionsMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, getString( R.string.loggingIn));
+        mLoading = optionsMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, getString(R.string.loggingIn));
 
         //----------------------------
         // Set up the view

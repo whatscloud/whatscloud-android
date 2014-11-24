@@ -44,6 +44,7 @@
                         android:textSize="16dp"
                         android:id="@+id/password"
                         android:padding="10dp"
+                        android:inputType="textPassword"
                         android:background="@drawable/bg_input"
                         android:singleLine="true"
                         android:layout_marginTop="5dp"

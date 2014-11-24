@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -103,7 +104,7 @@ public class ResetPassword extends SherlockActivity
         // Set default layout
         //-----------------------------
 
-        setContentView(R.layout.reset_change_password);
+        setContentView(R.layout.reset_password);
 
         //-----------------------------
         // Find and cache UI elements
@@ -117,6 +118,9 @@ public class ResetPassword extends SherlockActivity
         // Password transformation
         // without weird font
         //-----------------------------
+
+        mPassword.setTypeface(Typeface.DEFAULT);
+        mPasswordConfirm.setTypeface(Typeface.DEFAULT);
 
         mPassword.setTransformationMethod(new PasswordTransformationMethod());
         mPasswordConfirm.setTransformationMethod(new PasswordTransformationMethod());
@@ -200,7 +204,7 @@ public class ResetPassword extends SherlockActivity
         // Add refresh in Action Bar
         //----------------------------
 
-        mLoadingItem = optionsMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, getString( R.string.loggingIn));
+        mLoadingItem = optionsMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, getString(R.string.loggingIn));
 
         //----------------------------
         // Set up the view

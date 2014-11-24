@@ -32,7 +32,7 @@ public class AES
     public static final String SALT = "WhatsCloud";
     public static final String HASHING_ALGORITHM = "SHA-256";
 
-    public static SecretKey getAESSecret(Context context) throws Exception
+    public static SecretKeySpec getAESSecret(Context context) throws Exception
     {
         //--------------------------------
         // Get encryption key
@@ -75,13 +75,40 @@ public class AES
         // Prepare it for AES
         //--------------------------------
 
-        SecretKey secretSpec = new SecretKeySpec(secret.getEncoded(), "AES");
+        SecretKeySpec secretSpec = new SecretKeySpec(secret.getEncoded(), "AES");
 
         //--------------------------------
         // Return it
         //--------------------------------
 
         return secretSpec;
+    }
+
+    private static byte[] generateRandomIV()
+    {
+        //--------------------------------
+        // Get random generator
+        //--------------------------------
+
+        Random random = new Random();
+
+        //--------------------------------
+        // Prepare 16-bit iv
+        //--------------------------------
+
+        byte[] iv = new byte[16];
+
+        //--------------------------------
+        // Get 16 random bytes
+        //--------------------------------
+
+        random.nextBytes(iv);
+
+        //--------------------------------
+        // Return IV
+        //--------------------------------
+
+        return iv;
     }
 
     public static String encrypt(String message, Context context)
@@ -92,7 +119,7 @@ public class AES
             // Get AES secret
             //--------------------------------
 
-            SecretKey secret = getAESSecret(context);
+            SecretKeySpec secret = getAESSecret(context);
 
             //--------------------------------
             // Get AES cipher
@@ -101,22 +128,22 @@ public class AES
             Cipher aes = Cipher.getInstance("AES/CBC/PKCS5Padding");
 
             //--------------------------------
+            // Get generated IV
+            //--------------------------------
+
+            byte[] iv = generateRandomIV();
+
+            //--------------------------------
+            // Get generated IV spec
+            //--------------------------------
+
+            IvParameterSpec ivSpec = new IvParameterSpec(iv);
+
+            //--------------------------------
             // Initialize it with secret
             //--------------------------------
 
-            aes.init(aes.ENCRYPT_MODE, secret);
-
-            //--------------------------------
-            // Get cipher parameters
-            //--------------------------------
-
-            AlgorithmParameters parameters = aes.getParameters();
-
-            //--------------------------------
-            // Get generated IV and cipher
-            //--------------------------------
-
-            byte[] iv = parameters.getParameterSpec(IvParameterSpec.class).getIV();
+            aes.init(aes.ENCRYPT_MODE, secret, ivSpec);
 
             //--------------------------------
             // Get AES cipher text
@@ -249,7 +276,7 @@ public class AES
             // Get AES secret
             //--------------------------------
 
-            SecretKey secret = getAESSecret(context);
+            SecretKeySpec secret = getAESSecret(context);
 
             //--------------------------------
             // Get AES cipher

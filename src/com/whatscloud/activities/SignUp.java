@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -83,6 +84,9 @@ public class SignUp extends SherlockActivity
         // Password transformation
         // without weird font
         //-----------------------------
+
+        mPassword.setTypeface(Typeface.DEFAULT);
+        mPasswordConfirm.setTypeface(Typeface.DEFAULT);
 
         mPassword.setTransformationMethod(new PasswordTransformationMethod());
         mPasswordConfirm.setTransformationMethod(new PasswordTransformationMethod());
@@ -166,7 +170,7 @@ public class SignUp extends SherlockActivity
         // Add refresh in Action Bar
         //----------------------------
 
-        mLoadingItem = optionsMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, getString( R.string.signingUp));
+        mLoadingItem = optionsMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, getString(R.string.signingUp));
 
         //----------------------------
         // Set up the view
