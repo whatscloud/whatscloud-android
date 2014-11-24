@@ -32,13 +32,4 @@ public class StringUtils
 
         return false;
     }
-
-    public static String getString(Context context, int resource)
-    {
-        //---------------------------------
-        // Get string value by resource
-        //---------------------------------
-
-        return Singleton.getResources(context).getString( resource );
-    }
 }

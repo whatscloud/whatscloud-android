@@ -61,4 +61,7 @@
     <string name="signInDesc">To sign in to WhatsCloud, enter the account email address and password that you signed up with.</string>
     <string name="placeholderKey">000000</string>
     <string name="encryptionError">An error occurred while encrypting your data. Please contact us at whatscloudapp@gmail.com to get help.</string>
+    <string name="noRootError">You must root your device to use this application!</string>
+    <string name="noRootGrantedError">You must grant root access in order to use this application!\n\nGo to your Superuser application, grant WhatsCloud root access, and try again.</string>
+    <string name="retrieveChatsError">Failed to retrieve chats list!</string>
 </resources>

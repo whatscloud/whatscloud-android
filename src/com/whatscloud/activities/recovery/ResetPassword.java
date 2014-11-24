@@ -200,7 +200,7 @@ public class ResetPassword extends SherlockActivity
         // Add refresh in Action Bar
         //----------------------------
 
-        mLoadingItem = optionsMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, StringUtils.getString(this, R.string.loggingIn));
+        mLoadingItem = optionsMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, getString( R.string.loggingIn));
 
         //----------------------------
         // Set up the view
@@ -267,7 +267,7 @@ public class ResetPassword extends SherlockActivity
             // Log error
             //---------------------------------
 
-            throw new Exception("No Internet Connection");
+            throw new Exception(getString(R.string.noInternetDesc));
         }
 
         //-----------------------------

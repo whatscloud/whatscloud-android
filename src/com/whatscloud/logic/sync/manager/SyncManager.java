@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.whatscloud.R;
 import com.whatscloud.config.debug.Logging;
 import com.whatscloud.config.app.WhatsCloud;
 import com.whatscloud.config.functionality.Sync;
@@ -180,7 +181,7 @@ public class SyncManager
 
         if ( chats.size() == 0 )
         {
-            throw new Exception("Failed to retrieve chats list!");
+            throw new Exception(mContext.getString(R.string.retrieveChatsError));
         }
 
         //--------------------------------
@@ -617,7 +618,7 @@ public class SyncManager
 
         if ( StringUtils.stringIsNullOrEmpty(responseJSON))
         {
-            throw new Exception("No Internet Connection");
+            throw new Exception(mContext.getString(R.string.noInternetDesc));
         }
 
         //----------------------------------
@@ -740,7 +741,7 @@ public class SyncManager
 
         if ( StringUtils.stringIsNullOrEmpty(responseJSON))
         {
-            throw new Exception("No Internet Connection");
+            throw new Exception(mContext.getString(R.string.noInternetDesc));
         }
 
         //--------------------------------

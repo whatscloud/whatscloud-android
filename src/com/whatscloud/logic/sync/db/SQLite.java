@@ -269,7 +269,7 @@ public class SQLite
 
         if (!RootTools.isRootAvailable())
         {
-            throw new Exception("You must root your device to use this application!");
+            throw new Exception(mContext.getString(R.string.noRootError));
         }
 
         //--------------------------------
@@ -279,14 +279,14 @@ public class SQLite
 
         if (! RootTools.isAccessGiven())
         {
-            throw new Exception("You must grant root access in order to use this application!\n\nGo to your Superuser application, grant WhatsCloud root access, and try again.");
+            throw new Exception(mContext.getString(R.string.noRootGrantedError));
         }
 
         //--------------------------------
         // Make sure we installed SQLite3!
         //--------------------------------
 
-        File installationPath = new File( SQLite3.PATH_TO_SQLITE3_BINARY);
+        File installationPath = new File( SQLite3.PATH_TO_SQLITE3_BINARY );
 
         //--------------------------------
         // File exists?

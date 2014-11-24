@@ -288,7 +288,7 @@ public class AES
             //--------------------------------
 
             BugSenseHandler.sendException(exc);
-            
+
             //--------------------------------
             // Log the error
             //--------------------------------

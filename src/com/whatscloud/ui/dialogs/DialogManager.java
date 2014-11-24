@@ -27,27 +27,27 @@ public class DialogManager
         {
             case SYNC_COMPLETE:
                 dialog.setIcon(android.R.color.transparent);
-                dialog.setTitle(StringUtils.getString(activity, R.string.syncComplete));
-                dialog.setMessage(StringUtils.getString(activity, R.string.syncCompleteDesc));
+                dialog.setTitle(activity.getString(R.string.syncComplete));
+                dialog.setMessage(activity.getString(R.string.syncCompleteDesc));
                 break;
             case NO_INTERNET:
-                dialog.setTitle(StringUtils.getString(activity, R.string.noInternet));
-                dialog.setMessage(StringUtils.getString(activity, R.string.noInternetDesc));
+                dialog.setTitle(activity.getString(R.string.noInternet));
+                dialog.setMessage(activity.getString(R.string.noInternetDesc));
                 break;
             case NO_WHATSAPP:
-                dialog.setTitle(StringUtils.getString(activity, R.string.noWhatsApp));
-                dialog.setMessage(StringUtils.getString(activity, R.string.noWhatsAppDesc));
+                dialog.setTitle(activity.getString(R.string.noWhatsApp));
+                dialog.setMessage(activity.getString(R.string.noWhatsAppDesc));
                 break;
             case SYNC_FAILED:
-                dialog.setTitle(StringUtils.getString(activity, R.string.syncFailed));
-                dialog.setMessage(StringUtils.getString(activity, R.string.syncFailedDesc));
+                dialog.setTitle(activity.getString(R.string.syncFailed));
+                dialog.setMessage(activity.getString(R.string.syncFailedDesc));
                 break;
             case NO_GCM:
-                dialog.setTitle(StringUtils.getString(activity, R.string.gcmError));
-                dialog.setMessage(StringUtils.getString(activity, R.string.gcmErrorDesc));
+                dialog.setTitle(activity.getString(R.string.gcmError));
+                dialog.setMessage(activity.getString(R.string.gcmErrorDesc));
                 break;
             default:
-                dialog.setTitle(StringUtils.getString(activity, R.string.error));
+                dialog.setTitle(activity.getString(R.string.error));
                 dialog.setMessage(mServerMessage);
                 break;
         }

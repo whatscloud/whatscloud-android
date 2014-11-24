@@ -166,7 +166,7 @@ public class SignUp extends SherlockActivity
         // Add refresh in Action Bar
         //----------------------------
 
-        mLoadingItem = optionsMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, StringUtils.getString(this, R.string.signingUp));
+        mLoadingItem = optionsMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, getString( R.string.signingUp));
 
         //----------------------------
         // Set up the view
@@ -296,7 +296,7 @@ public class SignUp extends SherlockActivity
             // Log error
             //---------------------------------
 
-            throw new Exception("No Internet Connection");
+            throw new Exception(getString(R.string.noInternetDesc));
         }
 
         //-----------------------------

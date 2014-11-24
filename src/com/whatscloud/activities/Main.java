@@ -134,7 +134,7 @@ public class Main extends SherlockActivity
         // Show toast
         //-----------------------------
 
-        Toast.makeText(this, StringUtils.getString(this, R.string.installWhatsApp), Toast.LENGTH_LONG).show();
+        Toast.makeText(this, getString(R.string.installWhatsApp), Toast.LENGTH_LONG).show();
 
         //-----------------------------
         // Go to market (May fail!)
@@ -785,7 +785,7 @@ public class Main extends SherlockActivity
         // Create sign out menu item
         //--------------------------------
 
-        menu.add(0, MENU_SIGN_OUT, 0, StringUtils.getString(this, R.string.signOut));
+        menu.add(0, MENU_SIGN_OUT, 0, getString(R.string.signOut));
 
         //--------------------------------
         // Handled
@@ -840,7 +840,7 @@ public class Main extends SherlockActivity
             // Log error
             //---------------------------------
 
-            throw new Exception("No Internet Connection");
+            throw new Exception(getString(R.string.noInternetDesc));
         }
 
         //-----------------------------
