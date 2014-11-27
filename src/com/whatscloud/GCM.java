@@ -14,6 +14,7 @@ import com.whatscloud.logic.sync.SyncStatus;
 import com.whatscloud.logic.sync.manager.SyncManager;
 import com.whatscloud.utils.networking.HTTP;
 import com.whatscloud.ui.dialogs.DialogManager;
+import com.whatscloud.utils.strings.StringUtils;
 
 public class GCM extends BroadcastReceiver
 {
@@ -60,6 +61,15 @@ public class GCM extends BroadcastReceiver
         //--------------------------------
 
         String method = intent.getStringExtra("do");
+
+        //--------------------------------
+        // No method, ignore
+        //--------------------------------
+
+        if (StringUtils.stringIsNullOrEmpty(method))
+        {
+            return;
+        }
 
         //--------------------------------
         // Are we resetting unread count?
@@ -130,10 +140,25 @@ public class GCM extends BroadcastReceiver
         SyncManager manager = new SyncManager(context, false);
 
         //--------------------------------
-        // Send the pending messages
+        // Get last synced ID
         //--------------------------------
 
-        manager.sendPendingMessages(responseJSON, 0);
+        int lastMessageID = manager.getLastSyncedMessageID(mContext);
+
+        //--------------------------------
+        // Sync incoming messages first
+        //--------------------------------
+
+        manager.sync();
+
+        //--------------------------------
+        // Nothing synced?
+        //--------------------------------
+
+        if ( manager.getLastSyncedMessageID(mContext) == lastMessageID )
+        {
+            manager.sendPendingMessages(responseJSON, 0);
+        }
     }
 
     public class GetPendingChatMessagesAsync extends AsyncTask<Long, String, Integer>

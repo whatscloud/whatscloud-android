@@ -28,7 +28,7 @@ import com.whatscloud.R;
 import com.whatscloud.config.ads.AdMob;
 import com.whatscloud.config.app.WhatsCloud;
 import com.whatscloud.config.debug.Logging;
-import com.whatscloud.config.integration.WhatsApp;
+import com.whatscloud.config.integration.WhatsAppInterface;
 import com.whatscloud.config.reporting.BugSense;
 import com.whatscloud.logic.auth.User;
 import com.whatscloud.logic.sync.SyncStatus;
@@ -142,7 +142,7 @@ public class Main extends SherlockActivity
 
         try
         {
-            startActivity( new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + WhatsApp.PACKAGE) ) );
+            startActivity( new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + WhatsAppInterface.PACKAGE) ) );
         }
         catch( Exception exc )
         {
@@ -174,7 +174,7 @@ public class Main extends SherlockActivity
             // Locate package by name
             //-----------------------------
 
-            packages.getPackageInfo(WhatsApp.PACKAGE, PackageManager.GET_ACTIVITIES);
+            packages.getPackageInfo(WhatsAppInterface.PACKAGE, PackageManager.GET_ACTIVITIES);
 
             //-----------------------------
             // If we are still here,

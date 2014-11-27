@@ -6,6 +6,7 @@ import android.util.Log;
 import com.whatscloud.config.db.SQLite3;
 import com.whatscloud.config.debug.Logging;
 import com.whatscloud.config.functionality.Sync;
+import com.whatscloud.config.integration.WhatsAppInterface;
 import com.whatscloud.logic.sync.db.SQLite;
 import com.whatscloud.logic.root.RootCommand;
 import com.whatscloud.model.Chat;
@@ -36,6 +37,27 @@ public class WhatsApp
         this.mSQLite = new SQLite( context );
     }
 
+    private void updateLastChat(ChatMessage message) throws Exception
+    {
+        //--------------------------------
+        // Initialize contact hash map
+        //--------------------------------
+
+        HashMap<String, String> contact = new HashMap<String, String>();
+
+        //--------------------------------
+        // Reset unseen msg count
+        //--------------------------------
+
+        contact.put("unseen_msg_count", "0");
+
+        //--------------------------------
+        // Execute SQL query
+        //--------------------------------
+
+        mSQLite.update("wa_contacts", contact, "jid = '" + message.jid + "'", WhatsAppInterface.CONTACTS_DB);
+    }
+
     private void resetUnreadCount(ChatMessage message) throws Exception
     {
         //--------------------------------
@@ -54,7 +76,7 @@ public class WhatsApp
         // Execute SQL query
         //--------------------------------
 
-        mSQLite.update("wa_contacts", contact, "jid = '" + message.jid + "'", com.whatscloud.config.integration.WhatsApp.CONTACTS_DB);
+        mSQLite.update("wa_contacts", contact, "jid = '" + message.jid + "'", WhatsAppInterface.CONTACTS_DB);
     }
 
     public void resetTotalUnreadCount() throws Exception
@@ -75,7 +97,7 @@ public class WhatsApp
         // Execute SQL query
         //--------------------------------
 
-        mSQLite.update("wa_contacts", contact, "1 = 1", com.whatscloud.config.integration.WhatsApp.CONTACTS_DB);
+        mSQLite.update("wa_contacts", contact, "1 = 1", WhatsAppInterface.CONTACTS_DB);
 
         //--------------------------------
         // Restart WhatsApp!
@@ -99,7 +121,7 @@ public class WhatsApp
         // Execute SQL query
         //--------------------------------
 
-        List<HashMap<String, String>> rows = mSQLite.select(columns, "messages", "key_remote_jid = '" + jid + "' ORDER BY _id DESC LIMIT 0, 1", com.whatscloud.config.integration.WhatsApp.MESSAGE_DB);
+        List<HashMap<String, String>> rows = mSQLite.select(columns, "messages", "key_remote_jid = '" + jid + "' ORDER BY _id DESC LIMIT 0, 1", WhatsAppInterface.MESSAGE_DB);
 
         //--------------------------------
         // Get last id
@@ -142,7 +164,7 @@ public class WhatsApp
         // Execute SQL query
         //--------------------------------
 
-        List<HashMap<String, String>> rows = mSQLite.select(columns, "wa_contacts", "1 = 1", com.whatscloud.config.integration.WhatsApp.CONTACTS_DB);
+        List<HashMap<String, String>> rows = mSQLite.select(columns, "wa_contacts", "1 = 1", WhatsAppInterface.CONTACTS_DB);
 
         //--------------------------------
         // Get unread count
@@ -191,10 +213,18 @@ public class WhatsApp
         chat.put("message_table_id", lastID + "");
 
         //--------------------------------
+        // Update sort timestamp
+        // to make the chat list sort
+        // according to last sent message
+        //--------------------------------
+
+        chat.put("sort_timestamp", message.timeStamp + "");
+
+        //--------------------------------
         // Execute SQL query
         //--------------------------------
 
-        mSQLite.update("chat_list", chat, "key_remote_jid = '" + message.jid + "'", com.whatscloud.config.integration.WhatsApp.MESSAGE_DB);
+        mSQLite.update("chat_list", chat, "key_remote_jid = '" + message.jid + "'", WhatsAppInterface.MESSAGE_DB);
     }
 
     private void insertMessageDB(ChatMessage message) throws Exception
@@ -237,7 +267,7 @@ public class WhatsApp
         // Execute SQL query
         //--------------------------------
 
-        mSQLite.insert(row, "messages", com.whatscloud.config.integration.WhatsApp.MESSAGE_DB);
+        mSQLite.insert(row, "messages", WhatsAppInterface.MESSAGE_DB);
     }
 
     private void doSendMessage(ChatMessage message) throws Exception
@@ -297,7 +327,7 @@ public class WhatsApp
         // Stop WhatsApp!
         //--------------------------------
 
-        RootCommand.execute(com.whatscloud.config.integration.WhatsApp.STOP_WHATSAPP_COMMAND);
+        RootCommand.execute(WhatsAppInterface.STOP_WHATSAPP_COMMAND);
 
         //--------------------------------
         // Wait 200ms
@@ -309,7 +339,7 @@ public class WhatsApp
         // Start Messaging Service
         //--------------------------------
 
-        RootCommand.execute(com.whatscloud.config.integration.WhatsApp.START_MESSAGING_SERVICE_COMMAND);
+        RootCommand.execute(WhatsAppInterface.START_MESSAGING_SERVICE_COMMAND);
     }
 
     String getKeyID(ChatMessage message)
@@ -350,7 +380,7 @@ public class WhatsApp
         // Execute SQL query
         //--------------------------------
 
-        List<HashMap<String, String>> rows = mSQLite.select(columns, "messages", "_id > " + minMessageID + " AND media_wa_type != 4 AND status != -1" + ((jid != null) ? " AND key_remote_jid = '" + jid + "'" : "") + " ORDER BY timestamp " + ((jid != null) ? "DESC" : "ASC") + ((limit > 0) ? " LIMIT 0, " + limit : ""), com.whatscloud.config.integration.WhatsApp.MESSAGE_DB);
+        List<HashMap<String, String>> rows = mSQLite.select(columns, "messages", "_id > " + minMessageID + " AND media_wa_type != 4 AND status != -1" + ((jid != null) ? " AND key_remote_jid = '" + jid + "'" : "") + " ORDER BY timestamp " + ((jid != null) ? "DESC" : "ASC") + ((limit > 0) ? " LIMIT 0, " + limit : ""), WhatsAppInterface.MESSAGE_DB);
 
         //--------------------------------
         // Loop over returned rows
@@ -446,7 +476,7 @@ public class WhatsApp
         // Execute SQL query
         //--------------------------------
 
-        List<HashMap<String, String>> rows = mSQLite.select(columns, "wa_contacts", "_id > " + lastChatID + " ORDER BY _id ASC LIMIT 0, " + Sync.MAX_ITEMS_PER_SYNC, com.whatscloud.config.integration.WhatsApp.CONTACTS_DB);
+        List<HashMap<String, String>> rows = mSQLite.select(columns, "wa_contacts", "_id > " + lastChatID + " ORDER BY _id ASC LIMIT 0, " + Sync.MAX_ITEMS_PER_SYNC, WhatsAppInterface.CONTACTS_DB);
 
         //--------------------------------
         // Loop over returned rows
@@ -529,7 +559,7 @@ public class WhatsApp
         // Execute SQL query
         //--------------------------------
 
-        List<HashMap<String, String>> rows = mSQLite.select(columns, "chat_list", "1 = 1 ORDER BY message_table_id DESC", com.whatscloud.config.integration.WhatsApp.MESSAGE_DB);
+        List<HashMap<String, String>> rows = mSQLite.select(columns, "chat_list", "1 = 1 ORDER BY message_table_id DESC", WhatsAppInterface.MESSAGE_DB);
 
         //--------------------------------
         // Loop over returned rows

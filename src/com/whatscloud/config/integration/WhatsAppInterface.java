@@ -1,6 +1,6 @@
 package com.whatscloud.config.integration;
 
-public class WhatsApp
+public class WhatsAppInterface
 {
     public static String PACKAGE = "com.whatsapp";
     public static String MESSAGE_DB = "/data/data/" + PACKAGE + "/databases/msgstore.db";
