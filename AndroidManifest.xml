@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.whatscloud"
-          android:versionCode="10040"
-          android:versionName="1.0.4"
+          android:versionCode="10050"
+          android:versionName="1.0.5"
           android:installLocation="internalOnly">
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -45,6 +45,20 @@
                   android:theme="@style/Theme.WhatsCloud"
                   android:windowSoftInputMode="stateHidden|adjustResize">
         </activity>
+        <activity android:name=".activities.SignUp"
+                  android:launchMode="singleTask"
+                  android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"
+                  android:label="@string/titleSignUp"
+                  android:theme="@style/Theme.WhatsCloud"
+                  android:windowSoftInputMode="stateHidden|adjustPan">
+        </activity>
+        <activity android:name=".activities.tutorial.SuperuserTutorial"
+                  android:launchMode="singleTask"
+                  android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"
+                  android:label="@string/titleSuperuserTutorial"
+                  android:theme="@style/Theme.WhatsCloud"
+                  android:windowSoftInputMode="stateHidden|adjustPan">
+        </activity>
         <activity android:name="com.whatscloud.activities.recovery.RequestCode"
                   android:launchMode="singleTask"
                   android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"
@@ -65,13 +79,6 @@
                   android:label="@string/resetPassword"
                   android:theme="@style/Theme.WhatsCloud"
                   android:windowSoftInputMode="stateHidden|adjustResize">
-        </activity>
-        <activity android:name=".activities.SignUp"
-                  android:launchMode="singleTask"
-                  android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"
-                  android:label="@string/titleSignUp"
-                  android:theme="@style/Theme.WhatsCloud"
-                  android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
         <receiver
                 android:name="com.whatscloud.GCM"

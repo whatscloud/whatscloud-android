@@ -15,6 +15,7 @@ public class DialogManager
     public static final int NO_INTERNET = 3;
     public static final int SYNC_FAILED = 4;
     public static final int SYNC_COMPLETE = 5;
+    public static final int SUPERUSER_FAIL = 6;
 
     public static void BuildDialog( AlertDialog dialog, int dialogID, Context activity )
     {
@@ -29,6 +30,11 @@ public class DialogManager
                 dialog.setIcon(android.R.color.transparent);
                 dialog.setTitle(activity.getString(R.string.syncComplete));
                 dialog.setMessage(activity.getString(R.string.syncCompleteDesc));
+                break;
+            case SUPERUSER_FAIL:
+                dialog.setIcon(android.R.color.transparent);
+                dialog.setTitle(activity.getString(R.string.superuserLaunchFailedTitle));
+                dialog.setMessage(activity.getString(R.string.superuserLaunchFailed));
                 break;
             case NO_INTERNET:
                 dialog.setTitle(activity.getString(R.string.noInternet));

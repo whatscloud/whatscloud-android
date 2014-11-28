@@ -453,7 +453,7 @@ public class ResetPassword extends SherlockActivity
                 // Show sign in screen
                 //--------------------------------
 
-                navigateToSignIn();
+                signInScreen();
             }
         });
 
@@ -470,7 +470,7 @@ public class ResetPassword extends SherlockActivity
         builder.show();
     }
 
-    void navigateToSignIn()
+    void signInScreen()
     {
         //---------------------------------
         // Show sign in activity

@@ -25,6 +25,7 @@ import com.google.ads.AdRequest;
 import com.google.ads.AdSize;
 import com.google.ads.AdView;
 import com.whatscloud.R;
+import com.whatscloud.activities.tutorial.SuperuserTutorial;
 import com.whatscloud.config.ads.AdMob;
 import com.whatscloud.config.app.WhatsCloud;
 import com.whatscloud.config.debug.Logging;
@@ -47,6 +48,7 @@ public class Main extends SherlockActivity
     RelativeLayout mAdContainer;
 
     public static int MENU_SIGN_OUT = 1;
+    public static int MENU_SUPERUSER_TUTORIAL = 2;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -201,7 +203,7 @@ public class Main extends SherlockActivity
 
         if (! User.isSignedIn(this))
         {
-            navigateToSplash();
+            splashScreen();
         }
     }
 
@@ -431,16 +433,16 @@ public class Main extends SherlockActivity
             if ( errorCode == 0 )
             {
                 //--------------------------------
-                // Show success
-                //--------------------------------
-
-                showDialog(DialogManager.SYNC_COMPLETE);
-
-                //--------------------------------
                 // Start syncing every X seconds
                 //--------------------------------
 
                 SyncScheduler.scheduleSync(Main.this);
+
+                //--------------------------------
+                // Go to superuser tutorial
+                //--------------------------------
+
+                superuserTutorialScreen();
             }
             else
             {
@@ -699,7 +701,7 @@ public class Main extends SherlockActivity
         }
     }
 
-    void navigateToSplash()
+    void splashScreen()
     {
         //-----------------------------
         // Start splash activity
@@ -712,6 +714,15 @@ public class Main extends SherlockActivity
         //-----------------------------
 
         finish();
+    }
+
+    void superuserTutorialScreen()
+    {
+        //-----------------------------
+        // Start superuser activity
+        //-----------------------------
+
+        startActivity(new Intent().setClass(Main.this, SuperuserTutorial.class));
     }
 
     void initializeUI()
@@ -782,10 +793,11 @@ public class Main extends SherlockActivity
     public boolean onCreateOptionsMenu(Menu menu)
     {
         //--------------------------------
-        // Create sign out menu item
+        // Create menu items
         //--------------------------------
 
         menu.add(0, MENU_SIGN_OUT, 0, getString(R.string.signOut));
+        menu.add(0, MENU_SUPERUSER_TUTORIAL, 0, getString(R.string.superuserTutorialItem));
 
         //--------------------------------
         // Handled
@@ -807,6 +819,25 @@ public class Main extends SherlockActivity
             //--------------------------------
 
             new SignOutAsync().execute();
+
+            //--------------------------------
+            // Handle event
+            //--------------------------------
+
+            return true;
+        }
+
+        //--------------------------------
+        // Did we click tutorial?
+        //--------------------------------
+
+        else if (item.getItemId() == MENU_SUPERUSER_TUTORIAL)
+        {
+            //--------------------------------
+            // Show tutorial
+            //--------------------------------
+
+            superuserTutorialScreen();
 
             //--------------------------------
             // Handle event

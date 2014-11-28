@@ -1,4 +1,4 @@
-package com.whatscloud.activities;
+package com.whatscloud.activities.tutorial;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -6,22 +6,26 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
+
 import com.actionbarsherlock.app.SherlockActivity;
 import com.bugsense.trace.BugSenseHandler;
 import com.whatscloud.R;
+import com.whatscloud.activities.Main;
 import com.whatscloud.config.reporting.BugSense;
-import com.whatscloud.logic.auth.User;
+import com.whatscloud.config.root.SuperSU;
 import com.whatscloud.ui.dialogs.DialogManager;
 
-public class Splash extends SherlockActivity
+public class SuperuserTutorial extends SherlockActivity
 {
-    Button mSignUp;
-    TextView mSignIn;
+    Button mLaunchSuperUser;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
+        //---------------------------------
+        // Call super
+        //---------------------------------
+
         super.onCreate(savedInstanceState);
 
         //---------------------------------
@@ -43,14 +47,13 @@ public class Splash extends SherlockActivity
         // Set default layout
         //-----------------------------
 
-        setContentView(R.layout.splash);
+        setContentView(R.layout.superuser_tutorial);
 
         //-----------------------------
         // Find and cache UI elements
         //-----------------------------
 
-        mSignIn = (TextView)findViewById(R.id.signIn);
-        mSignUp = (Button)findViewById(R.id.signUp);
+        mLaunchSuperUser = (Button)findViewById(R.id.launchSuperUser);
 
         //-----------------------------
         // Set up on click listeners
@@ -62,75 +65,48 @@ public class Splash extends SherlockActivity
     void initializeListeners()
     {
         //-----------------------------
-        // Sign in button onclick
+        // Set up on button listener
         //-----------------------------
 
-        mSignIn.setOnClickListener(new View.OnClickListener()
+        mLaunchSuperUser.setOnClickListener( new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
                 //-----------------------------
-                // Log in
+                // Open SuperSU
                 //-----------------------------
 
-                signInScreen();
-            }
-        });
-
-        //-----------------------------
-        // Sign up button onclick
-        //-----------------------------
-
-        mSignUp.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                //-----------------------------
-                // Sign up
-                //-----------------------------
-
-                signUpScreen();
+                launchSuperSu();
             }
         });
     }
 
-    @Override
-    protected void onResume()
+    void launchSuperSu()
     {
-        //-----------------------------
-        // Call super
-        //-----------------------------
-
-        super.onResume();
-
-        //-----------------------------
-        // Logged in? Exit
-        //-----------------------------
-
-        if (User.isSignedIn(this))
+        try
         {
-            finish();
+            //-----------------------------
+            // Try to find SuperSU launch
+            // intent action
+            //-----------------------------
+
+            Intent launchIntent = getPackageManager().getLaunchIntentForPackage(SuperSU.SUPERSU_PACKAGE);
+
+            //-----------------------------
+            // Start SuperSU activity
+            //-----------------------------
+
+            startActivity( launchIntent );
         }
-    }
+        catch( Exception exc )
+        {
+            //-----------------------------
+            // In case we fail
+            //-----------------------------
 
-    void signUpScreen()
-    {
-        //---------------------------------
-        // Show sign up activity
-        //---------------------------------
-
-        startActivity(new Intent().setClass(Splash.this, SignUp.class));
-    }
-
-    void signInScreen()
-    {
-        //---------------------------------
-        // Show sign in activity
-        //---------------------------------
-
-        startActivity(new Intent().setClass(Splash.this, SignIn.class));
+            showDialog(DialogManager.SUPERUSER_FAIL);
+        }
     }
 
     @Override

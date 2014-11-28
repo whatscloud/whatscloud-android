@@ -466,7 +466,7 @@ public class SignUp extends SherlockActivity
                 // Show main window
                 //---------------------------------
 
-                navigateToMain();
+                mainScreen();
             }
             else
             {
@@ -479,7 +479,7 @@ public class SignUp extends SherlockActivity
         }
     }
 
-    void navigateToMain()
+    void mainScreen()
     {
         //---------------------------------
         // Show main activity
@@ -494,7 +494,7 @@ public class SignUp extends SherlockActivity
         finish();
     }
 
-    void navigateToSignIn()
+    void signInScreen()
     {
         //---------------------------------
         // Show main activity

@@ -37,27 +37,6 @@ public class WhatsApp
         this.mSQLite = new SQLite( context );
     }
 
-    private void updateLastChat(ChatMessage message) throws Exception
-    {
-        //--------------------------------
-        // Initialize contact hash map
-        //--------------------------------
-
-        HashMap<String, String> contact = new HashMap<String, String>();
-
-        //--------------------------------
-        // Reset unseen msg count
-        //--------------------------------
-
-        contact.put("unseen_msg_count", "0");
-
-        //--------------------------------
-        // Execute SQL query
-        //--------------------------------
-
-        mSQLite.update("wa_contacts", contact, "jid = '" + message.jid + "'", WhatsAppInterface.CONTACTS_DB);
-    }
-
     private void resetUnreadCount(ChatMessage message) throws Exception
     {
         //--------------------------------
@@ -214,7 +193,7 @@ public class WhatsApp
 
         //--------------------------------
         // Update sort timestamp
-        // to make the chat list sort
+        // to sort WhatsApp chat list
         // according to last sent message
         //--------------------------------
 

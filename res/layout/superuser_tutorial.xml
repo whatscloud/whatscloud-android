@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#e9e9e9">
+    <ScrollView
+        android:layout_above="@+id/signUp"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <RelativeLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:textColor="#696969"
+                    android:lineSpacingExtra="5dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/superuserTutorialIntro" />
+                <TextView
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="#696969"
+                    android:lineSpacingExtra="5dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/superuserTutorialDemo" />
+                <TextView
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:textColor="#696969"
+                    android:lineSpacingExtra="5dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/superuserTutorialContinuation" />
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+    <Button
+        android:id="@+id/launchSuperUser"
+        android:textColor="#fff"
+        android:background="@drawable/bg_button"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:text="@string/superuserLaunch"
+        android:layout_alignParentBottom="true" />
+</RelativeLayout>

@@ -163,7 +163,7 @@ public class SignIn extends SherlockActivity
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent)
             {
                 //----------------------------
-                // Perform navigateToSignIn
+                // Perform sign in
                 //----------------------------
 
                 return mSignIn.performClick();
@@ -226,7 +226,7 @@ public class SignIn extends SherlockActivity
         }
     }
 
-    void navigateToSignIn() throws Exception
+    void signInScreen() throws Exception
     {
         //---------------------------------
         // Get e-mail and password
@@ -242,7 +242,7 @@ public class SignIn extends SherlockActivity
         if ( StringUtils.stringIsNullOrEmpty(emailText) || StringUtils.stringIsNullOrEmpty(passwordText) )
         {
             //---------------------------------
-            // Show navigateToSignIn error
+            // Show sign in error
             //---------------------------------
 
             throw new Exception(getString(R.string.signInErrorDesc));
@@ -406,7 +406,7 @@ public class SignIn extends SherlockActivity
 
             try
             {
-                navigateToSignIn();
+                signInScreen();
             }
             catch( Exception exc )
             {
