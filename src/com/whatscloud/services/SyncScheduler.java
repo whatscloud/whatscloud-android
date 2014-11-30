@@ -45,6 +45,6 @@ public class SyncScheduler extends BroadcastReceiver
         // Set repetition using interval
         //---------------------------------
 
-        manager.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + Sync.INTERVAL, Sync.INTERVAL, pendingIntent);
+        manager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + Sync.INTERVAL, Sync.INTERVAL, pendingIntent);
     }
 }
