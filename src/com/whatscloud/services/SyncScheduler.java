@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.SystemClock;
 import android.util.Log;
 
@@ -27,6 +28,15 @@ public class SyncScheduler extends BroadcastReceiver
 
     static boolean isNotificationListenerActive(Context context)
     {
+        //-----------------------------
+        // Not using Android 4.3+?
+        //-----------------------------
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2)
+        {
+            return false;
+        }
+
         //---------------------------------
         // Get activity manager
         //---------------------------------
