@@ -65,11 +65,17 @@
     <string name="noRootGrantedError">You must grant root access in order to use this application!\n\nGo to your Superuser application, grant WhatsCloud root access, and try again.</string>
     <string name="retrieveChatsError">Failed to retrieve chats list!</string>
     <string name="titleSuperuserTutorial">SuperSU Notifications</string>
-    <string name="superuserTutorialIntro">By default, SuperSU will notify you every time WhatsCloud syncs your messages.</string>
+    <string name="superuserTutorialIntro">By default, <b>SuperSU</b> will notify you every time WhatsCloud syncs your messages.</string>
     <string name="superuserTutorialDemo">WhatsCloud has been granted superuser permissions for an interactive shell</string>
-    <string name="superuserTutorialContinuation">If you want to disable this behavior, click the button below to go to <b>SuperSU</b> -> click the <b>Settings</b> tab -> disable <b>Show notifications</b>.</string>
-    <string name="superuserLaunch">Go to SuperSU</string>
+    <string name="superuserTutorialContinuation">If you want to disable this behavior, click the icon above to go to <b>SuperSU</b> -> click the <b>Settings</b> tab -> disable <b>Show notifications</b>.</string>
     <string name="superuserLaunchFailed">Failed to launch SuperSU, please verify that it is installed.</string>
     <string name="superuserLaunchFailedTitle">SuperSU Missing</string>
-    <string name="superuserTutorialItem">SuperSU notifications</string>
+    <string name="tutorialItem">Tutorials</string>
+    <string name="nlIntro">By default, <b>WhatsCloud</b> will periodically check for new messages to sync, every few seconds.</string>
+    <string name="nlDemo">You can prevent this behavior by enabling notification access for WhatsCloud.</string>
+    <string name="nlContinuation">If you want to improve battery life, click the icon above and grant notification access to <b>WhatsCloud</b>.</string>
+    <string name="done">Done</string>
+    <string name="titleNotificationAccessTutorial">Notification Access</string>
+    <string name="notificationAccessFailedTitle">Error</string>
+    <string name="notificationAccessFailed"><![CDATA[Failed to open Notification Access settings. Try to manually enable notification access for WhatsCloud via Settings -> Sounds & Notificaitons -> Notification Access.]]></string>
 </resources>

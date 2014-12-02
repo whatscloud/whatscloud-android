@@ -3,7 +3,6 @@ package com.whatscloud.activities.tutorial;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,13 +12,12 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.bugsense.trace.BugSenseHandler;
 import com.whatscloud.R;
 import com.whatscloud.config.reporting.BugSense;
-import com.whatscloud.config.root.SuperSU;
 import com.whatscloud.ui.dialogs.DialogManager;
 
-public class SuperuserTutorial extends SherlockActivity
+public class NotificationAccessTutorial extends SherlockActivity
 {
     Button mDone;
-    ImageView mLaunchSuperUser;
+    ImageView mLaunchNotificationAccess;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -49,14 +47,14 @@ public class SuperuserTutorial extends SherlockActivity
         // Set default layout
         //-----------------------------
 
-        setContentView(R.layout.superuser_tutorial);
+        setContentView(R.layout.notification_access_tutorial);
 
         //-----------------------------
         // Find and cache UI elements
         //-----------------------------
 
         mDone = (Button)findViewById(R.id.done);
-        mLaunchSuperUser = (ImageView)findViewById(R.id.launchSuperUser);
+        mLaunchNotificationAccess = (ImageView)findViewById(R.id.launchNotificationAccess);
 
         //-----------------------------
         // Set up on click listeners
@@ -71,7 +69,7 @@ public class SuperuserTutorial extends SherlockActivity
         // Set up icon listener
         //-----------------------------
 
-        mLaunchSuperUser.setOnClickListener( new View.OnClickListener()
+        mLaunchNotificationAccess.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
@@ -80,7 +78,7 @@ public class SuperuserTutorial extends SherlockActivity
                 // Open SuperSU
                 //-----------------------------
 
-                launchSuperSu();
+                launchNotificationAccess();
             }
         });
 
@@ -94,46 +92,24 @@ public class SuperuserTutorial extends SherlockActivity
             public void onClick(View view)
             {
                 //-----------------------------
-                // Open next tutorial
+                // Just finish
                 //-----------------------------
 
-                nextScreen();
+                finish();
             }
         });
     }
 
-    void nextScreen()
-    {
-        //-----------------------------
-        // Using Android 4.3 or later?
-        //-----------------------------
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2)
-        {
-            //-----------------------------
-            // Show notification access tut
-            //-----------------------------
-
-            startActivity(new Intent().setClass(this, NotificationAccessTutorial.class));
-        }
-
-        //-----------------------------
-        // Exit this activity
-        //-----------------------------
-
-        finish();
-    }
-
-    void launchSuperSu()
+    void launchNotificationAccess()
     {
         try
         {
             //-----------------------------
-            // Try to find SuperSU launch
-            // intent action
+            // Try to launch
+            // the notification access page
             //-----------------------------
 
-            Intent launchIntent = getPackageManager().getLaunchIntentForPackage(SuperSU.SUPERSU_PACKAGE);
+            Intent launchIntent = new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS");
 
             //-----------------------------
             // Start SuperSU activity

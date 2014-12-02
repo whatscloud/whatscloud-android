@@ -1,6 +1,7 @@
 package com.whatscloud.services;
 
 import android.app.IntentService;
+import android.content.Context;
 import android.content.Intent;
 
 import com.whatscloud.logic.auth.User;
@@ -22,46 +23,55 @@ public class SyncOperation extends IntentService
     protected void onHandleIntent(Intent intent)
     {
         //---------------------------------
+        // Try to sync
+        //---------------------------------
+
+        sync(this);
+    }
+
+    public static void sync(Context context)
+    {
+        //---------------------------------
         // Are we logged in?
         //---------------------------------
 
-        if ( User.isSignedIn(this) )
+        if ( User.isSignedIn(context) )
         {
             //---------------------------------
             // Already synced first time?
             //---------------------------------
 
-            if ( User.isInitialSyncComplete(this) )
+            if ( User.isInitialSyncComplete(context) )
             {
                 //---------------------------------
                 // Not syncing right now?
                 //---------------------------------
 
-                if ( ! SyncStatus.isSyncing(this) )
+                if ( ! SyncStatus.isSyncing(context) )
                 {
                     //---------------------------------
                     // Sync!
                     //---------------------------------
 
-                    sync();
+                    startSyncManager(context);
                 }
             }
         }
     }
 
-    void sync()
+    public static void startSyncManager(Context context)
     {
         //--------------------------------
         // Prevent simultaneous sync
         //--------------------------------
 
-        SyncStatus.setSyncing(this, true);
+        SyncStatus.setSyncing(context, true);
 
         //--------------------------------
         // Call upon our sync manager
         //--------------------------------
 
-        SyncManager manager = new SyncManager(this, true);
+        SyncManager manager = new SyncManager(context, true);
 
         //--------------------------------
         // Actually sync!
@@ -74,7 +84,7 @@ public class SyncOperation extends IntentService
         catch( Exception exc )
         {
             //--------------------------------
-            // Log the error
+            // Ignore sync errors for now
             //--------------------------------
 
             //Log.e(Main.TAG_NAME, Exc.getMessage());
@@ -84,6 +94,6 @@ public class SyncOperation extends IntentService
         // No longer syncing
         //--------------------------------
 
-        SyncStatus.setSyncing(this, false);
+        SyncStatus.setSyncing(context, false);
     }
 }

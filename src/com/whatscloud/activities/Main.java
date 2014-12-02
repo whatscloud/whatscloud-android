@@ -797,7 +797,7 @@ public class Main extends SherlockActivity
         //--------------------------------
 
         menu.add(0, MENU_SIGN_OUT, 0, getString(R.string.signOut));
-        menu.add(0, MENU_SUPERUSER_TUTORIAL, 0, getString(R.string.superuserTutorialItem));
+        menu.add(0, MENU_SUPERUSER_TUTORIAL, 0, getString(R.string.tutorialItem));
 
         //--------------------------------
         // Handled

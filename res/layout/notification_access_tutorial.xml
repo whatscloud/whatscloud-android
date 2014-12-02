@@ -19,12 +19,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
-                android:id="@+id/launchSuperUser"
+                android:id="@+id/launchNotificationAccess"
                 android:layout_height="100dp"
                 android:layout_width="fill_parent"
-                android:src="@drawable/ic_supersu"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="20dp" />
+                android:layout_marginBottom="20dp"
+                android:src="@drawable/ic_settings" />
             <TextView
                 android:textSize="14sp"
                 android:gravity="center"
@@ -33,7 +33,7 @@
                 android:layout_marginBottom="30dp"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/superuserTutorialIntro" />
+                android:text="@string/nlIntro" />
             <TextView
                 android:textSize="14sp"
                 android:gravity="center"
@@ -43,7 +43,7 @@
                 android:layout_marginBottom="30dp"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/superuserTutorialDemo" />
+                android:text="@string/nlDemo" />
             <TextView
                 android:textSize="14sp"
                 android:gravity="center"
@@ -52,7 +52,7 @@
                 android:layout_marginBottom="30dp"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/superuserTutorialContinuation" />
+                android:text="@string/nlContinuation" />
         </LinearLayout>
     </ScrollView>
     <Button
