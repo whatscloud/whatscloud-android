@@ -10,6 +10,7 @@ import com.whatscloud.config.debug.Logging;
 import com.whatscloud.config.reporting.BugSense;
 import com.whatscloud.logic.auth.User;
 import com.whatscloud.utils.objects.Singleton;
+import com.whatscloud.utils.strings.StringUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.security.AlgorithmParameters;
@@ -113,6 +114,15 @@ public class AES
 
     public static String encrypt(String message, Context context)
     {
+        //--------------------------------
+        // No need to encrypt empty strings
+        // --------------------------------
+
+        if (StringUtils.stringIsNullOrEmpty(message))
+        {
+            return "";
+        }
+
         try
         {
             //--------------------------------
@@ -252,6 +262,15 @@ public class AES
 
     public static String decrypt(String message, Context context)
     {
+        //--------------------------------
+        // No need to decrypt empty strings
+        // --------------------------------
+
+        if (StringUtils.stringIsNullOrEmpty(message))
+        {
+            return "";
+        }
+
         try
         {
             //--------------------------------

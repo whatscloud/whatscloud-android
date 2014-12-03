@@ -11,6 +11,7 @@ import com.whatscloud.logic.sync.db.SQLite;
 import com.whatscloud.logic.root.RootCommand;
 import com.whatscloud.model.Chat;
 import com.whatscloud.model.ChatMessage;
+import com.whatscloud.utils.strings.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -350,6 +351,7 @@ public class WhatsApp
                         "media_url",
                         "timestamp",
                         "key_from_me",
+                        "media_caption",
                         "media_wa_type",
                         "remote_resource",
                         "key_remote_jid"
@@ -414,6 +416,15 @@ public class WhatsApp
             //--------------------------------
 
             message.data = message.data.replace( SQLite3.LINE_BREAK_CHAR, "\n" );
+
+            //--------------------------------
+            // Sync media caption
+            //--------------------------------
+
+            if (! StringUtils.stringIsNullOrEmpty( message.mediaURL ) )
+            {
+                message.data = row.get("media_caption");
+            }
 
             //--------------------------------
             // Add to list of messages

@@ -21,9 +21,9 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.bugsense.trace.BugSenseHandler;
-import com.google.ads.AdRequest;
-import com.google.ads.AdSize;
-import com.google.ads.AdView;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
 import com.whatscloud.R;
 import com.whatscloud.activities.tutorial.SuperuserTutorial;
 import com.whatscloud.config.ads.AdMob;
@@ -106,16 +106,28 @@ public class Main extends SherlockActivity
     void initializeAds()
     {
         //---------------------------------
-        // Create a Smart Banner
+        // Create an ad view
         //---------------------------------
 
-        AdView adView = new AdView(this, AdSize.SMART_BANNER, AdMob.UNIT_ID);
+        AdView adView = new AdView(this);
 
         //---------------------------------
-        // Load the ad
+        // Set size to smart
         //---------------------------------
 
-        adView.loadAd(new AdRequest());
+        adView.setAdSize(AdSize.SMART_BANNER);
+
+        //---------------------------------
+        // Set UNIT ID
+        //---------------------------------
+
+        adView.setAdUnitId(AdMob.UNIT_ID);
+
+        //---------------------------------
+        // Load an advertisement
+        //---------------------------------
+
+        adView.loadAd(new AdRequest.Builder().build() );
 
         //---------------------------------
         // Remove previous ads (if any)
