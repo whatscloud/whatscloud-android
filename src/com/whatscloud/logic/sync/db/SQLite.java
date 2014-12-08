@@ -7,6 +7,7 @@ import android.util.Log;
 import com.whatscloud.R;
 import com.whatscloud.config.db.SQLite3;
 import com.whatscloud.config.debug.Logging;
+import com.whatscloud.config.integration.WhatsAppInterface;
 import com.whatscloud.logic.root.RootCommand;
 import com.whatscloud.root.RootTools;
 import com.whatscloud.root.execution.Command;
@@ -39,10 +40,10 @@ public class SQLite
     public List<HashMap<String, String>> select(final String[] columns, String tableName, String whereClause, String dbName) throws Exception
     {
         //--------------------------------
-        // Make sure we installed SQLite3!
+        // Make sure we installed binaries!
         //--------------------------------
 
-        installSQLite3();
+        installBinaries();
 
         //--------------------------------
         // Create a list of rows
@@ -124,10 +125,10 @@ public class SQLite
     public void insert(HashMap<String, String> row, String tableName, String dbName) throws Exception
     {
         //--------------------------------
-        // Make sure we installed SQLite3!
+        // Make sure we installed binaries!
         //--------------------------------
 
-        installSQLite3();
+        installBinaries();
 
         //--------------------------------
         // Escape single-quotes
@@ -171,10 +172,10 @@ public class SQLite
     public void update(String tableName, HashMap<String, String> row, String whereClause, String dbName) throws Exception
     {
         //--------------------------------
-        // Make sure we installed SQLite3!
+        // Make sure we installed binaries!
         //--------------------------------
 
-        installSQLite3();
+        installBinaries();
 
         //--------------------------------
         // Prepare set array
@@ -261,10 +262,10 @@ public class SQLite
         return row;
     }
 
-    public void installSQLite3() throws Exception
+    public void installBinaries() throws Exception
     {
         //--------------------------------
-        // Make sure we installed SQLite3!
+        // Make sure we have root!
         //--------------------------------
 
         if (!RootTools.isRootAvailable())
@@ -273,20 +274,50 @@ public class SQLite
         }
 
         //--------------------------------
-        // Make sure we gave root
-        // Also asks for root
+        // Make sure we have permission
         //--------------------------------
 
-        if (! RootTools.isAccessGiven())
+        if (!RootTools.isAccessGiven())
         {
             throw new Exception(mContext.getString(R.string.noRootGrantedError));
         }
 
         //--------------------------------
-        // Make sure we installed SQLite3!
+        // Install busybox binary
         //--------------------------------
 
-        File installationPath = new File( SQLite3.PATH_TO_SQLITE3_BINARY );
+        installBinary(WhatsAppInterface.PATH_TO_BUSYBOX_BINARY, R.raw.busybox_binary);
+
+        //--------------------------------
+        // Get default sqlite3 binary
+        //--------------------------------
+
+        int resource = R.raw.sqlite3_binary_5x;
+
+        //--------------------------------
+        // Add support pre-5.x devices
+        // (Pre-PIE enforcement)
+        //--------------------------------
+
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT)
+        {
+            resource = R.raw.sqlite3_binary_4x;
+        }
+
+        //--------------------------------
+        // Install sqlite3 binary
+        //--------------------------------
+
+        installBinary(SQLite3.PATH_TO_SQLITE3_BINARY, resource);
+    }
+
+    void installBinary(String path, int resource) throws Exception
+    {
+        //--------------------------------
+        // Get path to file
+        //--------------------------------
+
+        File installationPath = new File( path );
 
         //--------------------------------
         // File exists?
@@ -301,17 +332,7 @@ public class SQLite
         // Open file from raw assets
         //--------------------------------
 
-        InputStream rawResource = mContext.getResources().openRawResource(R.raw.sqlite3_binary_5x);
-
-        //--------------------------------
-        // Add support pre-5.x devices
-        // (Pre-PIE enforcement)
-        //--------------------------------
-
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT)
-        {
-            rawResource = mContext.getResources().openRawResource(R.raw.sqlite3_binary_4x);
-        }
+        InputStream rawResource = mContext.getResources().openRawResource(resource);
 
         //--------------------------------
         // Create output stream

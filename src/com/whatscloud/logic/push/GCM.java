@@ -3,6 +3,7 @@ package com.whatscloud.logic.push;
 import android.content.Context;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.whatscloud.config.push.GCMParameters;
 import com.whatscloud.utils.objects.Singleton;
 import com.whatscloud.utils.strings.StringUtils;
 
@@ -32,7 +33,7 @@ public class GCM
             // Try to sign up
             //---------------------------------
 
-            pushToken = gcm.register(com.whatscloud.config.push.GCM.SENDER_ID);
+            pushToken = gcm.register(GCMParameters.SENDER_ID);
         }
 
         return pushToken;
