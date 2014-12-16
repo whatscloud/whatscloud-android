@@ -660,7 +660,7 @@ public class Main extends SherlockActivity
 
             try
             {
-                manager.sendPendingMessages(responseJSON, 0);
+                manager.sendPendingMessages(responseJSON);
             }
             catch( Exception exc )
             {

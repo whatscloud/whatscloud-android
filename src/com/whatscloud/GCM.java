@@ -140,25 +140,10 @@ public class GCM extends BroadcastReceiver
         SyncManager manager = new SyncManager(context, false);
 
         //--------------------------------
-        // Get last synced ID
+        // Send messages
         //--------------------------------
 
-        int lastMessageID = manager.getLastSyncedMessageID(mContext);
-
-        //--------------------------------
-        // Sync incoming messages first
-        //--------------------------------
-
-        manager.sync();
-
-        //--------------------------------
-        // Nothing synced?
-        //--------------------------------
-
-        if ( manager.getLastSyncedMessageID(mContext) == lastMessageID )
-        {
-            manager.sendPendingMessages(responseJSON, 0);
-        }
+        manager.sendPendingMessages(responseJSON);
     }
 
     public class GetPendingChatMessagesAsync extends AsyncTask<Long, String, Integer>

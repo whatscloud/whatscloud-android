@@ -268,7 +268,7 @@ public class SyncManager
                 // Sync the list to server
                 //--------------------------------
 
-                saveMessages(syncMessages);
+                syncMessagesToServer(syncMessages);
 
                 //--------------------------------
                 // Clear the list
@@ -427,18 +427,11 @@ public class SyncManager
 
         List<ChatMessage> newMessages = mWhatsApp.getMessages(lastMessageID, null, Sync.MAX_ITEMS_PER_SYNC);
 
-        //--------------------------------
-        // Got new messages?
-        //--------------------------------
+        //----------------------------
+        // Sync messages to server
+        //----------------------------
 
-        if ( newMessages.size() > 0 )
-        {
-            //----------------------------
-            // Send messages to server
-            //----------------------------
-
-            saveMessages(newMessages);
-        }
+        syncMessagesToServer(newMessages);
 
         //----------------------------
         // Return synced messages
@@ -487,8 +480,17 @@ public class SyncManager
         return newChats.size();
     }
 
-    public void saveMessages(List<ChatMessage> messages) throws Exception
+    public void syncMessagesToServer(List<ChatMessage> messages) throws Exception
     {
+        //----------------------------
+        // No messages?
+        //----------------------------
+
+        if ( messages.size() == 0 )
+        {
+            return;
+        }
+
         //----------------------------
         // Traverse messages
         //----------------------------
@@ -548,10 +550,31 @@ public class SyncManager
         String responseJSON = HTTP.post(WhatsCloud.API_URL + "/sync?do=messages", postData);
 
         //--------------------------------
+        // No Internet?
+        //--------------------------------
+
+        if ( StringUtils.stringIsNullOrEmpty(responseJSON))
+        {
+            throw new Exception(mContext.getString(R.string.noInternetDesc));
+        }
+
+        //---------------------------------
+        // Get last synced message id
+        //---------------------------------
+
+        int lastMessageID = messages.get(messages.size() - 1).id;
+
+        //---------------------------------
+        // Save it
+        //---------------------------------
+
+        saveLastMessageID(mContext, lastMessageID);
+
+        //--------------------------------
         // Send the pending messages
         //--------------------------------
 
-        sendPendingMessages(responseJSON, messages.get(messages.size() - 1).id);
+        sendPendingMessages(responseJSON);
 
         //--------------------------------
         // Log the sync
@@ -610,7 +633,7 @@ public class SyncManager
         saveLastUnreadCount(mContext, 0);
     }
 
-    public void sendPendingMessages(String responseJSON, int lastMessageID) throws Exception
+    public void sendPendingMessages(String responseJSON) throws Exception
     {
         //--------------------------------
         // No Internet?
@@ -651,16 +674,6 @@ public class SyncManager
             //---------------------------------
 
             message.data = AES.decrypt(message.data, mContext);
-        }
-
-        //---------------------------------
-        // Save last synced message id
-        // from previous sync
-        //---------------------------------
-
-        if ( lastMessageID > 0 )
-        {
-            saveLastMessageID(mContext, lastMessageID);
         }
 
         //----------------------------------
