@@ -13,8 +13,8 @@
     <string name="loading">Loading...</string>
     <string name="selectRecipient">Select a recipient for your message.</string>
     <string name="installWhatsApp">You must install WhatsApp to use WhatsCloud!</string>
-    <string name="gcmError">Push Notifications</string>
-    <string name="gcmErrorDesc">An error occurred while registering your device for push notifications.\n\nPlease try again
+    <string name="pushError">Push Notifications</string>
+    <string name="pushErrorDesc">An error occurred while registering your device for push notifications.\n\nPlease try again
         later.
     </string>
     <string name="signOut">Sign out</string>

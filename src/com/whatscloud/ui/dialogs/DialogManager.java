@@ -4,13 +4,12 @@ import android.app.AlertDialog;
 import android.content.Context;
 
 import com.whatscloud.R;
-import com.whatscloud.utils.strings.StringUtils;
 
 public class DialogManager
 {
     static String mServerMessage;
 
-    public static final int NO_GCM = 1;
+    public static final int NO_PUSH = 1;
     public static final int NO_WHATSAPP = 2;
     public static final int NO_INTERNET = 3;
     public static final int SYNC_FAILED = 4;
@@ -54,9 +53,9 @@ public class DialogManager
                 dialog.setTitle(activity.getString(R.string.syncFailed));
                 dialog.setMessage(activity.getString(R.string.syncFailedDesc));
                 break;
-            case NO_GCM:
-                dialog.setTitle(activity.getString(R.string.gcmError));
-                dialog.setMessage(activity.getString(R.string.gcmErrorDesc));
+            case NO_PUSH:
+                dialog.setTitle(activity.getString(R.string.pushError));
+                dialog.setMessage(activity.getString(R.string.pushErrorDesc));
                 break;
             default:
                 dialog.setTitle(activity.getString(R.string.error));

@@ -33,7 +33,7 @@ public class User
         // Get the stored API key
         //--------------------------------
 
-        return Singleton.getSettings(context).getString("key", "");
+        return Singleton.getSettings(context).getString("api_key", "");
     }
 
     public static void saveCredentials(Context context, String email, String password, String key, String pushToken)
@@ -45,11 +45,15 @@ public class User
         SharedPreferences.Editor editor = Singleton.getSettings(context).edit();
 
         //---------------------------------
-        // Store in shared preferences
+        // Store API key
         //---------------------------------
 
-        editor.putString("push", pushToken);
-        editor.putString("key", key);
+        editor.putString("api_key", key);
+
+        //---------------------------------
+        // Store user & pass
+        //---------------------------------
+
         editor.putString("email", email);
         editor.putString("password", password);
 

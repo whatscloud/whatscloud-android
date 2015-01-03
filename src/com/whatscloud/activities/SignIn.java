@@ -24,13 +24,14 @@ import com.whatscloud.activities.recovery.RequestCode;
 import com.whatscloud.config.app.WhatsCloud;
 import com.whatscloud.config.reporting.BugSense;
 import com.whatscloud.logic.auth.User;
-import com.whatscloud.logic.push.GCM;
 import com.whatscloud.logic.security.AES;
 import com.whatscloud.utils.strings.StringUtils;
 import com.whatscloud.utils.networking.HTTP;
 import com.whatscloud.ui.SoftKeyboard;
 import com.whatscloud.ui.dialogs.DialogManager;
 import org.json.JSONObject;
+
+import me.pushy.sdk.Pushy;
 
 public class SignIn extends SherlockActivity
 {
@@ -260,15 +261,15 @@ public class SignIn extends SherlockActivity
             // Get cached push token
             //---------------------------------
 
-            pushToken = GCM.getPushToken(SignIn.this);
+            pushToken = Pushy.register(SignIn.this);
         }
         catch( Exception exc )
         {
             //---------------------------------
-            // Show GCM error
+            // Show error
             //---------------------------------
 
-            throw new Exception(getString(R.string.gcmErrorDesc));
+            throw new Exception(getString(R.string.pushErrorDesc));
         }
 
         //---------------------------------

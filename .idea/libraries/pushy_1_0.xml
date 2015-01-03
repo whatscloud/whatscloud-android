@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="pushy-1.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/pushy-1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/wmqtt.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

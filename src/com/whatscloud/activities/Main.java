@@ -41,6 +41,8 @@ import com.whatscloud.ui.dialogs.DialogManager;
 import com.whatscloud.services.SyncScheduler;
 import org.json.JSONObject;
 
+import me.pushy.sdk.Pushy;
+
 public class Main extends SherlockActivity
 {
     ImageView mIcon;
@@ -101,6 +103,22 @@ public class Main extends SherlockActivity
         //---------------------------------
 
         initializeAds();
+
+        //---------------------------------
+        // Initialize push notifications
+        //---------------------------------
+
+        initializePushListener();
+    }
+
+    void initializePushListener()
+    {
+        //-----------------------------
+        // Restart listening, in case
+        // we force-closed the app
+        //-----------------------------
+
+        Pushy.listen(this);
     }
 
     void initializeAds()
@@ -213,7 +231,7 @@ public class Main extends SherlockActivity
         // Both empty? Go to sign in
         //-----------------------------
 
-        if (! User.isSignedIn(this))
+        if (!User.isSignedIn(this))
         {
             splashScreen();
         }

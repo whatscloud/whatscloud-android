@@ -1,4 +1,4 @@
-package com.whatscloud;
+package com.whatscloud.logic.push;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -16,7 +16,7 @@ import com.whatscloud.utils.networking.HTTP;
 import com.whatscloud.ui.dialogs.DialogManager;
 import com.whatscloud.utils.strings.StringUtils;
 
-public class GCM extends BroadcastReceiver
+public class PushReceiver extends BroadcastReceiver
 {
     Context mContext;
 
@@ -45,17 +45,20 @@ public class GCM extends BroadcastReceiver
         }
 
         //--------------------------------
-        // Did we receive a push?
+        // Handle the push
         //--------------------------------
 
-        if (intent.getAction().equals("com.google.android.c2dm.intent.RECEIVE"))
-        {
-            receivePush(context, intent);
-        }
+        handlePush(context, intent);
     }
 
-    void receivePush(Context context, Intent intent)
+    void handlePush(Context context, Intent intent)
     {
+        //---------------------------------
+        // Log the push
+        //---------------------------------
+
+        Log.d(Logging.TAG_NAME, "Received push");
+
         //--------------------------------
         // Get do
         //--------------------------------
