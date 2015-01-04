@@ -1,4 +1,4 @@
-package com.whatscloud.services;
+package com.whatscloud.receivers;
 
 import android.app.ActivityManager;
 import android.app.AlarmManager;
@@ -13,6 +13,7 @@ import android.util.Log;
 import com.whatscloud.config.debug.Logging;
 import com.whatscloud.config.functionality.Sync;
 import com.whatscloud.listeners.NotificationListener;
+import com.whatscloud.services.SyncService;
 
 public class SyncScheduler extends BroadcastReceiver
 {
@@ -79,15 +80,26 @@ public class SyncScheduler extends BroadcastReceiver
     public static void scheduleSync(Context context)
     {
         //---------------------------------
-        // Did we enable the notification
-        // listener service?
-        //
-        // Don't schedule polling
+        // Cancel any previous schedule
+        //---------------------------------
+
+        cancelScheduledSync(context);
+
+        //---------------------------------
+        // Default interval in case we
+        // haven't enabled Notification Access
+        //---------------------------------
+
+        long interval = Sync.DEFAULT_INTERVAL;
+
+        //---------------------------------
+        // Did we enable notification
+        // access in settings?
         //---------------------------------
 
         if ( isNotificationListenerActive(context) )
         {
-            return;
+            interval = Sync.LISTENER_INTERVAL;
         }
 
         //---------------------------------
@@ -100,7 +112,7 @@ public class SyncScheduler extends BroadcastReceiver
         // Create intent linking to Service
         //---------------------------------
 
-        Intent intent = new Intent(context, SyncOperation.class);
+        Intent intent = new Intent(context, SyncService.class);
 
         //---------------------------------
         // Create pending intent
@@ -112,7 +124,7 @@ public class SyncScheduler extends BroadcastReceiver
         // Set repetition using interval
         //---------------------------------
 
-        manager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + Sync.INTERVAL, Sync.INTERVAL, pendingIntent);
+        manager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + interval, interval, pendingIntent);
 
         //---------------------------------
         // Output to log
@@ -133,7 +145,7 @@ public class SyncScheduler extends BroadcastReceiver
         // Create intent linking to Service
         //---------------------------------
 
-        Intent intent = new Intent(context, SyncOperation.class);
+        Intent intent = new Intent(context, SyncService.class);
 
         //---------------------------------
         // Create pending intent

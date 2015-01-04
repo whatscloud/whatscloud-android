@@ -295,6 +295,12 @@ public class WhatsApp
         }
 
         //--------------------------------
+        // Log insertion
+        //--------------------------------
+
+        Log.d(Logging.TAG_NAME, "Inserted messages into database");
+
+        //--------------------------------
         // Restart WhatsApp!
         //--------------------------------
 
@@ -320,6 +326,12 @@ public class WhatsApp
         //--------------------------------
 
         RootCommand.execute(WhatsAppInterface.START_MESSAGING_SERVICE_COMMAND);
+
+        //--------------------------------
+        // Log restart
+        //--------------------------------
+
+        Log.d(Logging.TAG_NAME, "Restarted " + WhatsAppInterface.PACKAGE);
     }
 
     String getKeyID(ChatMessage message)

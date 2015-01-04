@@ -8,8 +8,8 @@ import android.util.Log;
 
 import com.whatscloud.config.debug.Logging;
 import com.whatscloud.config.integration.WhatsAppInterface;
-import com.whatscloud.services.SyncOperation;
-import com.whatscloud.services.SyncScheduler;
+import com.whatscloud.services.SyncService;
+import com.whatscloud.receivers.SyncScheduler;
 
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
 
@@ -25,25 +25,8 @@ public class NotificationListener extends NotificationListenerService
         super.onCreate();
 
         //---------------------------------
-        // Stop using the old-fashioned
-        // polling method
-        //---------------------------------
-
-        SyncScheduler.cancelScheduledSync( this );
-    }
-
-    @Override
-    public void onDestroy()
-    {
-        //---------------------------------
-        // Call super
-        //---------------------------------
-
-        super.onDestroy();
-
-        //---------------------------------
-        // Start using the old-fashioned
-        // polling method
+        // Sync every X minutes, to
+        // update the unread status
         //---------------------------------
 
         SyncScheduler.scheduleSync(this);
@@ -69,17 +52,10 @@ public class NotificationListener extends NotificationListenerService
         Log.d(Logging.TAG_NAME, "WhatsApp notification detected");
 
         //---------------------------------
-        // Cancel scheduled sync
-        // if for some reason it's active
-        //---------------------------------
-
-        SyncScheduler.cancelScheduledSync( this );
-
-        //---------------------------------
         // Try to sync
         //---------------------------------
 
-        SyncOperation.sync(this);
+        SyncService.sync(this);
     }
 
     @Override

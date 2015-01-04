@@ -38,7 +38,7 @@ import com.whatscloud.utils.strings.StringUtils;
 import com.whatscloud.utils.networking.HTTP;
 import com.whatscloud.utils.objects.Singleton;
 import com.whatscloud.ui.dialogs.DialogManager;
-import com.whatscloud.services.SyncScheduler;
+import com.whatscloud.receivers.SyncScheduler;
 import org.json.JSONObject;
 
 import me.pushy.sdk.Pushy;
@@ -272,7 +272,7 @@ public class Main extends SherlockActivity
                     new syncPendingMessages().execute();
 
                     //--------------------------------
-                    // Sync changes every 3 seconds
+                    // Sync changes every X seconds
                     //--------------------------------
 
                     SyncScheduler.scheduleSync(Main.this);
@@ -673,12 +673,22 @@ public class Main extends SherlockActivity
             SyncManager manager = new SyncManager(Main.this, false);
 
             //--------------------------------
-            // Actually send the messages
+            // Catch exceptions
             //--------------------------------
 
             try
             {
+                //--------------------------------
+                // Actually send the messages
+                //--------------------------------
+
                 manager.sendPendingMessages(responseJSON);
+
+                //--------------------------------
+                // Sync other things
+                //--------------------------------
+
+                manager.sync();
             }
             catch( Exception exc )
             {
@@ -694,6 +704,7 @@ public class Main extends SherlockActivity
 
                 return exc.getMessage().hashCode();
             }
+
 
             //--------------------------------
             // Success!

@@ -8,15 +8,15 @@ import com.whatscloud.logic.auth.User;
 import com.whatscloud.logic.sync.SyncStatus;
 import com.whatscloud.logic.sync.manager.SyncManager;
 
-public class SyncOperation extends IntentService
+public class SyncService extends IntentService
 {
-    public SyncOperation()
+    public SyncService()
     {
         //---------------------------------
         // Call super with service name
         //---------------------------------
 
-        super("SyncOperation");
+        super("SyncService");
     }
 
     @Override

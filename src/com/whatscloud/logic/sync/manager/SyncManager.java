@@ -208,7 +208,7 @@ public class SyncManager
             // Get last 20 messages
             //--------------------------------
 
-            List<ChatMessage> lastMessages = mWhatsApp.getMessages(0, chat.jid, Sync.MAX_MESSAGES_PER_CHAT_INITIAL);
+            List<ChatMessage> lastMessages = mWhatsApp.getMessages(0, chat.jid, Sync.MAX_MESSAGES_PER_CHAT_INITIAL_SYNC);
 
             //--------------------------------
             // No messages returned? Continue
