@@ -148,7 +148,7 @@ public class SyncManager
         // Prepare last id temp variable
         //--------------------------------
 
-        int maxID = 0, done = 0;
+        int maxID = 0, i = 0;
 
         //--------------------------------
         // Send the request
@@ -204,6 +204,12 @@ public class SyncManager
 
         for ( Chat chat : chats )
         {
+            //----------------------------
+            // Increment counter
+            //----------------------------
+
+            i++;
+
             //--------------------------------
             // Get last 20 messages
             //--------------------------------
@@ -252,17 +258,11 @@ public class SyncManager
 
             syncMessages.addAll(lastMessages);
 
-            //----------------------------
-            // Increment counter
-            //----------------------------
-
-            done++;
-
             //--------------------------------
             // Time to sync?
             //--------------------------------
 
-            if ( syncMessages.size() >= Sync.MAX_ITEMS_PER_SYNC || done == chats.size() )
+            if ( syncMessages.size() >= Sync.MAX_ITEMS_PER_SYNC )
             {
                 //--------------------------------
                 // Sync the list to server
@@ -281,7 +281,26 @@ public class SyncManager
             // Update progress
             //----------------------------
 
-            saveSyncProgress(done, chats.size());
+            saveSyncProgress(i, chats.size());
+        }
+
+        //--------------------------------
+        // Left over messages?
+        //--------------------------------
+
+        if ( syncMessages.size() > 0 )
+        {
+            //--------------------------------
+            // Sync the list to server
+            //--------------------------------
+
+            syncMessagesToServer(syncMessages);
+
+            //--------------------------------
+            // Clear the list
+            //--------------------------------
+
+            syncMessages.clear();
         }
 
         //---------------------------------
@@ -343,8 +362,8 @@ public class SyncManager
 
         editor.commit();
 
-         //---------------------------------
-        // Pop event
+        //---------------------------------
+        // Broadcast event
         //---------------------------------
 
         Events.broadcastEvent(mContext, "SyncProgress");

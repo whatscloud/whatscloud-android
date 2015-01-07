@@ -265,11 +265,65 @@ public class WhatsApp
         resetUnreadCount(message);
 
         //--------------------------------
+        // Create chat item in case
+        // we never contacted this JID
+        // before now
+        //--------------------------------
+
+        createChatIfMissing(message);
+
+        //--------------------------------
         // Update last id (to display
         // the last-inserted message)
         //--------------------------------
 
         updateChatLastMessageID(message);
+    }
+
+
+    private void createChatIfMissing(ChatMessage message) throws Exception
+    {
+        //--------------------------------
+        // Select _id for testing
+        //--------------------------------
+
+        String[] columns = new String[]
+                {
+                        "_id"
+                };
+
+        //--------------------------------
+        // Get chats by JID
+        //--------------------------------
+
+        List<HashMap<String, String>> chats = mSQLite.select(columns, "chat_list", "key_remote_jid = '" + message.jid + "' LIMIT 0, 1", WhatsAppInterface.MESSAGE_DB);
+
+        //--------------------------------
+        // Chat exists?
+        //--------------------------------
+
+        if ( chats.size() > 0 )
+        {
+            return;
+        }
+
+        //--------------------------------
+        // Initialize row hash map
+        //--------------------------------
+
+        HashMap<String, String> row = new HashMap<String, String>();
+
+        //--------------------------------
+        // Add message-specific fields
+        //--------------------------------
+
+        row.put("key_remote_jid", message.jid);
+
+        //--------------------------------
+        // Execute SQL query
+        //--------------------------------
+
+        mSQLite.insert(row, "chat_list", WhatsAppInterface.MESSAGE_DB);
     }
 
     public void sendMessages(List<ChatMessage> messages) throws Exception
