@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.whatscloud"
-          android:versionCode="10150"
-          android:versionName="1.1.5"
+          android:versionCode="10160"
+          android:versionName="1.1.6"
           android:installLocation="internalOnly">
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -111,7 +111,7 @@
 
         <!-- Pushy Declarations -->
 
-            <!-- Pushy Notification Receiver -->
+            <!-- Notification Receiver -->
             <receiver android:name=".logic.push.PushReceiver" >
                 <intent-filter>
                     <action android:name="pushy.me" />

@@ -292,16 +292,26 @@ public class SQLite
         // Get default sqlite3 binary
         //--------------------------------
 
-        int resource = R.raw.sqlite3_binary_5x;
+        int resource = R.raw.sqlite3_binary_4x;
 
         //--------------------------------
         // Add support pre-5.x devices
         // (Pre-PIE enforcement)
         //--------------------------------
 
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
         {
-            resource = R.raw.sqlite3_binary_4x;
+            resource = R.raw.sqlite3_binary_5x;
+        }
+
+        //--------------------------------
+        // Add support for 5.0.2 devices
+        // (New libsqlite3.so)
+        //--------------------------------
+
+        if (Build.VERSION.RELEASE.equals("5.0.2"))
+        {
+            resource = R.raw.sqlite3_binary_5_0_2;
         }
 
         //--------------------------------
