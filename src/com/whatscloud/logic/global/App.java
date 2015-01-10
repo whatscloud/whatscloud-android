@@ -1,6 +1,10 @@
 package com.whatscloud.logic.global;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.pm.PackageManager;
+
+import com.whatscloud.config.app.WhatsCloud;
 
 public class App extends Application
 {
@@ -22,6 +26,30 @@ public class App extends Application
         //---------------------------------
 
         mIsSyncing = value;
+    }
+
+    public static int getVersionCode(Context context)
+    {
+        //---------------------------------
+        // Attempt to get version code
+        //---------------------------------
+
+        try
+        {
+            //---------------------------------
+            // Access package info
+            //---------------------------------
+
+            return context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionCode;
+        }
+        catch (PackageManager.NameNotFoundException e)
+        {
+            //---------------------------------
+            // Return minimum code
+            //---------------------------------
+
+            return WhatsCloud.MINIMUM_LOGIN_VERSION_CODE;
+        }
     }
 
     @Override

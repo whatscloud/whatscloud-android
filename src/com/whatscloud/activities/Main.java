@@ -496,17 +496,16 @@ public class Main extends SherlockActivity
                 if (key.equalsIgnoreCase("SyncProgress"))
                 {
                     //-------------------------------
-                    // Get done and total
+                    // Get message
                     //-------------------------------
 
-                    int done = Singleton.getSettings(Main.this).getInt("sync_done", 0);
-                    int total = Singleton.getSettings(Main.this).getInt("sync_total", 1);
+                    String message = Singleton.getSettings(Main.this).getString("sync_message", getString(R.string.syncing));
 
                     //-------------------------------
                     // Update loading text
                     //-------------------------------
 
-                    mLoading.setMessage(getString(R.string.syncing) + " (" + (int) (100 * (double) done / total) + "%)");
+                    mLoading.setMessage(message);
                 }
             }
         };

@@ -262,7 +262,7 @@ public class SyncManager
             // Time to sync?
             //--------------------------------
 
-            if ( syncMessages.size() >= Sync.MAX_ITEMS_PER_SYNC )
+            if ( syncMessages.size() >= Sync.MAX_MESSAGES_PER_SYNC)
             {
                 //--------------------------------
                 // Sync the list to server
@@ -281,7 +281,7 @@ public class SyncManager
             // Update progress
             //----------------------------
 
-            saveSyncProgress(i, chats.size());
+            saveSyncProgress(mContext.getString(R.string.syncingMessages) + " (" + (int) (100 * (double) i / chats.size()) + "%)");
         }
 
         //--------------------------------
@@ -341,7 +341,7 @@ public class SyncManager
         while ( syncChatsBulk() > 0 );
     }
 
-    public void saveSyncProgress(int done, int total)
+    public void saveSyncProgress(String message)
     {
         //----------------------------------
         // Get shared preferences editor
@@ -353,8 +353,7 @@ public class SyncManager
         // Store in shared preferences
         //---------------------------------
 
-        editor.putInt("sync_done", done);
-        editor.putInt("sync_total", total);
+        editor.putString("sync_message", message);
 
         //---------------------------------
         // Save preferences
@@ -444,7 +443,7 @@ public class SyncManager
         // Get new messages
         //--------------------------------
 
-        List<ChatMessage> newMessages = mWhatsApp.getMessages(lastMessageID, null, Sync.MAX_ITEMS_PER_SYNC);
+        List<ChatMessage> newMessages = mWhatsApp.getMessages(lastMessageID, null, Sync.MAX_MESSAGES_PER_SYNC);
 
         //----------------------------
         // Sync messages to server
@@ -465,13 +464,19 @@ public class SyncManager
         // Get last synced chat id
         //--------------------------------
 
-        int lastChatID = getLastSyncedChatID(mContext);
+        int lastSyncedChatID = getLastSyncedChatID(mContext);
+
+        //--------------------------------
+        // Get total chats
+        //--------------------------------
+
+        int lastChatID = mWhatsApp.getLastChatID();
 
         //--------------------------------
         // Get new chats
         //--------------------------------
 
-        List<Chat> newChats = mWhatsApp.getChats(lastChatID);
+        List<Chat> newChats = mWhatsApp.getChats(lastSyncedChatID);
 
         //--------------------------------
         // Got new chats?
@@ -486,11 +491,23 @@ public class SyncManager
             saveChats(newChats);
 
             //---------------------------------
+            // Update last synced chat id
+            //---------------------------------
+
+            lastSyncedChatID = newChats.get(newChats.size() - 1).id;
+
+            //---------------------------------
             // Save last synced chat id
             //---------------------------------
 
-            saveLastChatID(mContext, newChats.get(newChats.size() - 1).id);
+            saveLastChatID(mContext, lastSyncedChatID);
         }
+
+        //----------------------------
+        // Update progress
+        //----------------------------
+
+        saveSyncProgress(mContext.getString(R.string.syncingChats) + " (" + (int) (100 * (double) lastSyncedChatID / lastChatID) + "%)");
 
         //----------------------------
         // Return synced chats

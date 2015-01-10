@@ -171,7 +171,7 @@ public class AES
             // Base64 encode the byte array
             //--------------------------------
 
-            return Base64.encodeToString(encrypted, Base64.DEFAULT);
+            return Base64.encodeToString(encrypted, Base64.NO_WRAP);
         }
         catch( Exception exc )
         {
@@ -277,7 +277,7 @@ public class AES
             // Decode from Base64
             //--------------------------------
 
-            byte[] data = Base64.decode(message.getBytes("UTF-8"), Base64.DEFAULT);
+            byte[] data = Base64.decode(message.getBytes("UTF-8"), Base64.NO_WRAP);
 
             //--------------------------------
             // Get IV from byte array

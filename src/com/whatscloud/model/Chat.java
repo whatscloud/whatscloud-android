@@ -19,6 +19,9 @@ public class Chat
     @JsonProperty("Status")
     public String status;
 
+    @JsonProperty("Picture")
+    public String picture;
+
     @JsonProperty("WhatsAppUser")
     public int whatsAppUser;
 }

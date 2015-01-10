@@ -1,6 +1,9 @@
 package com.whatscloud.logic.sync.integration;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.util.Log;
 
 import com.whatscloud.config.db.SQLite3;
@@ -13,6 +16,8 @@ import com.whatscloud.model.Chat;
 import com.whatscloud.model.ChatMessage;
 import com.whatscloud.utils.strings.StringUtils;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -170,6 +175,49 @@ public class WhatsApp
         //--------------------------------
 
         return unread;
+    }
+
+    public int getLastChatID() throws Exception
+    {
+        //--------------------------------
+        // Get back sum
+        //--------------------------------
+
+        String[] columns = new String[]
+                {
+                        "_id"
+                };
+
+        //--------------------------------
+        // Execute SQL query
+        //--------------------------------
+
+        List<HashMap<String, String>> rows = mSQLite.select(columns, "wa_contacts", "1 = 1 ORDER BY _id DESC LIMIT 0, 1", WhatsAppInterface.CONTACTS_DB);
+
+        //--------------------------------
+        // Get count
+        //--------------------------------
+
+        int count = 0;
+
+        try
+        {
+            count = Integer.parseInt(rows.get(0).get("_id"));
+        }
+        catch( Exception exc )
+        {
+            //--------------------------------
+            // Log it
+            //--------------------------------
+
+            Log.e(Logging.TAG_NAME, "parseInt() failed in getLastChatID(): " + rows.get(0).get("_id"));
+        }
+
+        //--------------------------------
+        // Return count
+        //--------------------------------
+
+        return count;
     }
 
     private void updateChatLastMessageID(ChatMessage message) throws Exception
@@ -532,7 +580,7 @@ public class WhatsApp
         // Execute SQL query
         //--------------------------------
 
-        List<HashMap<String, String>> rows = mSQLite.select(columns, "wa_contacts", "_id > " + lastChatID + " ORDER BY _id ASC LIMIT 0, " + Sync.MAX_ITEMS_PER_SYNC, WhatsAppInterface.CONTACTS_DB);
+        List<HashMap<String, String>> rows = mSQLite.select(columns, "wa_contacts", "_id > " + lastChatID + " ORDER BY _id ASC LIMIT 0, " + Sync.MAX_CHATS_PER_SYNC, WhatsAppInterface.CONTACTS_DB);
 
         //--------------------------------
         // Loop over returned rows
@@ -580,6 +628,12 @@ public class WhatsApp
             chat.status = row.get("status");
 
             //--------------------------------
+            // Attempt to retrieve chat pic
+            //--------------------------------
+
+            chat.picture = getChatPicture(chat);
+
+            //--------------------------------
             // Add to list of chats
             //--------------------------------
 
@@ -591,6 +645,113 @@ public class WhatsApp
         //--------------------------------
 
         return chats;
+    }
+
+    private String getChatPicture(Chat chat)
+    {
+        //--------------------------------
+        // No JID, no go
+        //--------------------------------
+
+        if ( StringUtils.stringIsNullOrEmpty(chat.jid))
+        {
+            return "";
+        }
+
+        //--------------------------------
+        // Proceed with caution
+        //--------------------------------
+
+        try
+        {
+            //--------------------------------
+            // Create Avatars folder
+            //--------------------------------
+
+            RootCommand.execute(WhatsAppInterface.PATH_TO_BUSYBOX_BINARY + " mkdir " + WhatsAppInterface.WHATSAPP_PICTURES_DESTINATION_FOLDER);
+
+            //--------------------------------
+            // Copy from internal data to
+            // /sdcard/ so we can access it
+            //--------------------------------
+
+            RootCommand.execute(WhatsAppInterface.PATH_TO_BUSYBOX_BINARY + " cp " + WhatsAppInterface.WHATSAPP_PICTURES_SOURCE_FOLDER + "/" + chat.jid + ".j " + WhatsAppInterface.WHATSAPP_PICTURES_DESTINATION_FOLDER + "/" + chat.jid + ".jpg");
+        }
+        catch( Exception exc )
+        {
+            //--------------------------------
+            // Log the exception
+            //--------------------------------
+
+            Log.d(Logging.TAG_NAME, exc.getMessage());
+
+            //--------------------------------
+            // This may fail in case
+            // there is no image
+            //--------------------------------
+
+            return "";
+        }
+
+        //--------------------------------
+        // Create path to file
+        //--------------------------------
+
+        File jpg = new File( WhatsAppInterface.WHATSAPP_PICTURES_DESTINATION_FOLDER + "/" + chat.jid + ".jpg");
+
+        //--------------------------------
+        // File does not exist?
+        //--------------------------------
+
+        if ( ! jpg.exists() )
+        {
+            return "";
+        }
+
+        //--------------------------------
+        // Read the file as bytes
+        //--------------------------------
+
+        Bitmap bitmap = BitmapFactory.decodeFile(jpg.getAbsolutePath());
+
+        //--------------------------------
+        // Read failed?
+        //--------------------------------
+
+        if ( bitmap == null )
+        {
+            return "";
+        }
+
+        //--------------------------------
+        // Resize it (it's pretty big)
+        //--------------------------------
+
+        bitmap = Bitmap.createScaledBitmap(bitmap, Sync.PICTURE_DIMENSIONS, Sync.PICTURE_DIMENSIONS, false);
+
+        //--------------------------------
+        // Create a stream
+        //--------------------------------
+
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+
+        //--------------------------------
+        // Compress into output stream
+        //--------------------------------
+
+        bitmap.compress(Bitmap.CompressFormat.JPEG, Sync.PICTURE_QUALITY, stream);
+
+        //--------------------------------
+        // Convert to byte array
+        //--------------------------------
+
+        byte[] bytes = stream.toByteArray();
+
+        //--------------------------------
+        // Encode as Base64 string
+        //--------------------------------
+
+        return Base64.encodeToString(bytes, Base64.NO_WRAP);
     }
 
     public List<Chat> getChatList() throws Exception

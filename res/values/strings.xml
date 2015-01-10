@@ -78,4 +78,6 @@
     <string name="titleNotificationAccessTutorial">Notification Access</string>
     <string name="notificationAccessFailedTitle">Error</string>
     <string name="notificationAccessFailed"><![CDATA[Failed to open Notification Access settings. Try to manually enable notification access for WhatsCloud via Settings -> Sounds & Notificaitons -> Notification Access.]]></string>
+    <string name="syncingChats">Syncing Chats...</string>
+    <string name="syncingMessages">Syncing Messages...</string>
 </resources>

@@ -3,9 +3,13 @@ package com.whatscloud.logic.auth;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.whatscloud.config.app.WhatsCloud;
+import com.whatscloud.logic.global.App;
 import com.whatscloud.logic.security.AES;
 import com.whatscloud.utils.objects.Singleton;
 import com.whatscloud.utils.strings.StringUtils;
+
+import me.pushy.sdk.BuildConfig;
 
 public class User
 {
@@ -20,6 +24,15 @@ public class User
 
     public static boolean isSignedIn(Context context)
     {
+        //--------------------------------
+        // Outdated login?
+        //--------------------------------
+
+        if (getLoginVersionCode(context) < WhatsCloud.MINIMUM_LOGIN_VERSION_CODE)
+        {
+            return false;
+        }
+
         //--------------------------------
         // Do we have keys stored?
         //--------------------------------
@@ -36,10 +49,19 @@ public class User
         return Singleton.getSettings(context).getString("api_key", "");
     }
 
+    public static int getLoginVersionCode(Context context)
+    {
+        //--------------------------------
+        // Get the stored login version
+        //--------------------------------
+
+        return Singleton.getSettings(context).getInt("login_version_code", 0);
+    }
+
     public static void saveCredentials(Context context, String email, String password, String key, String pushToken)
     {
         //----------------------------------
-        // Success! Save all credentials
+        // Get preferences
         //----------------------------------
 
         SharedPreferences.Editor editor = Singleton.getSettings(context).edit();
@@ -69,6 +91,12 @@ public class User
         //---------------------------------
 
         editor.putBoolean("initial_sync", false);
+
+        //---------------------------------
+        // Store current version
+        //---------------------------------
+
+        editor.putInt("login_version_code", App.getVersionCode(context));
 
         //---------------------------------
         // Save preferences

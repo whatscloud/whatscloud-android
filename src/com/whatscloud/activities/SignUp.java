@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +21,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.bugsense.trace.BugSenseHandler;
 import com.whatscloud.R;
 import com.whatscloud.config.app.WhatsCloud;
+import com.whatscloud.config.debug.Logging;
 import com.whatscloud.config.reporting.BugSense;
 import com.whatscloud.logic.auth.User;
 import com.whatscloud.logic.sync.manager.SyncManager;
@@ -252,6 +254,12 @@ public class SignUp extends SherlockActivity
         }
         catch( Exception exc )
         {
+            //---------------------------------
+            // Log error
+            //---------------------------------
+
+            Log.d(Logging.TAG_NAME, "Registration failed", exc);
+
             //---------------------------------
             // Show error
             //---------------------------------
