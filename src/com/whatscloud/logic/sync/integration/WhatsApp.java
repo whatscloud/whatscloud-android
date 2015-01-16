@@ -631,7 +631,7 @@ public class WhatsApp
             // Attempt to retrieve chat pic
             //--------------------------------
 
-            chat.picture = getChatPicture(chat);
+            //chat.picture = getChatPicture(chat);
 
             //--------------------------------
             // Add to list of chats
