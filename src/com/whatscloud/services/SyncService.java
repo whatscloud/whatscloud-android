@@ -16,7 +16,7 @@ public class SyncService extends IntentService
         // Call super with service name
         //---------------------------------
 
-        super("SyncService");
+        super(SyncService.class.getName());
     }
 
     @Override

@@ -130,7 +130,7 @@ public class SyncScheduler extends BroadcastReceiver
         // Output to log
         //---------------------------------
 
-        Log.d(Logging.TAG_NAME, "Scheduled sync (polling)");
+        Log.d(Logging.TAG_NAME, "Scheduled sync (polling) every " + interval + " ms");
     }
 
     public static void cancelScheduledSync(Context context)
