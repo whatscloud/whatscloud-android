@@ -6,4 +6,5 @@ public class WhatsCloud
 
     public static String PACKAGE = "com.whatscloud";
     public static String API_URL = "https://whatscloud.io/api";
+    public static String ROOT_URL = "https://whatscloud.io/root";
 }

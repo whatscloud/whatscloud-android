@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#e9e9e9"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ScrollView
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/layout"
+            android:paddingTop="15dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="35dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="21sp"
+                android:gravity="center"
+                android:textColor="#696969"
+                android:lineSpacingExtra="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/noRootIntro" />
+            <ImageView
+                android:layout_height="100dp"
+                android:layout_width="fill_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                android:src="@drawable/ic_supersu" />
+            <TextView
+                android:textSize="14sp"
+                android:gravity="center"
+                android:textColor="#696969"
+                android:lineSpacingExtra="5dp"
+                android:layout_marginBottom="30dp"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/noRootDesc" />
+        </LinearLayout>
+    </ScrollView>
+    <Button
+        android:id="@+id/noRootLink"
+        android:textColor="#fff"
+        android:background="@drawable/bg_button"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:text="@string/learnMore"
+        android:layout_alignParentBottom="true" />
+</RelativeLayout>

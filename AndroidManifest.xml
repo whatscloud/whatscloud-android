@@ -59,6 +59,13 @@
                   android:theme="@style/Theme.WhatsCloud"
                   android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
+        <activity android:name=".activities.NoRoot"
+                  android:launchMode="singleTask"
+                  android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"
+                  android:label="@string/whatscloud"
+                  android:theme="@style/Theme.WhatsCloud"
+                  android:windowSoftInputMode="stateHidden|adjustPan">
+        </activity>
         <activity android:name=".activities.tutorial.SuperuserTutorial"
                   android:launchMode="singleTask"
                   android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"

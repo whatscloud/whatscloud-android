@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 public class WhatsApp
 {
@@ -109,6 +110,15 @@ public class WhatsApp
         List<HashMap<String, String>> rows = mSQLite.select(columns, "messages", "key_remote_jid = '" + jid + "' ORDER BY _id DESC LIMIT 0, 1", WhatsAppInterface.MESSAGE_DB);
 
         //--------------------------------
+        // No rows?
+        //--------------------------------
+
+        if ( rows.size() == 0 )
+        {
+            return 0;
+        }
+
+        //--------------------------------
         // Get last id
         //--------------------------------
 
@@ -152,6 +162,15 @@ public class WhatsApp
         List<HashMap<String, String>> rows = mSQLite.select(columns, "wa_contacts", "1 = 1", WhatsAppInterface.CONTACTS_DB);
 
         //--------------------------------
+        // No rows?
+        //--------------------------------
+
+        if ( rows.size() == 0 )
+        {
+            return 0;
+        }
+
+        //--------------------------------
         // Get unread count
         //--------------------------------
 
@@ -193,6 +212,15 @@ public class WhatsApp
         //--------------------------------
 
         List<HashMap<String, String>> rows = mSQLite.select(columns, "wa_contacts", "1 = 1 ORDER BY _id DESC LIMIT 0, 1", WhatsAppInterface.CONTACTS_DB);
+
+        //--------------------------------
+        // No rows?
+        //--------------------------------
+
+        if ( rows.size() == 0 )
+        {
+            return 0;
+        }
 
         //--------------------------------
         // Get count
@@ -442,7 +470,7 @@ public class WhatsApp
         // Get a solid id
         //--------------------------------
 
-        return message.timeStamp + "-1";
+        return message.timeStamp + "-" + ( new Random().nextInt(10) + 1);
     }
 
     public List<ChatMessage> getMessages(int minMessageID, String jid, int limit) throws Exception

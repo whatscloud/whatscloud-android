@@ -80,4 +80,8 @@
     <string name="notificationAccessFailed"><![CDATA[Failed to open Notification Access settings. Try to manually enable notification access for WhatsCloud via Settings -> Sounds & Notificaitons -> Notification Access.]]></string>
     <string name="syncingChats">Syncing Chats...</string>
     <string name="syncingMessages">Syncing Messages...</string>
+    <string name="noRootIntro">Your device is not rooted!</string>
+    <string name="noRootDesc">We need permanent root access to sync your messages to our service, to make them available online.\n\nYou will <b>not</b> be able to use WhatsCloud without rooting your device.</string>
+    <string name="noRootLink">Click here to learn more about rooting</string>
+    <string name="learnMore">Learn More</string>
 </resources>

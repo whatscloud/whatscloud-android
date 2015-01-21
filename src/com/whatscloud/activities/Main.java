@@ -34,6 +34,7 @@ import com.whatscloud.config.reporting.BugSense;
 import com.whatscloud.logic.auth.User;
 import com.whatscloud.logic.sync.SyncStatus;
 import com.whatscloud.logic.sync.manager.SyncManager;
+import com.whatscloud.root.RootTools;
 import com.whatscloud.utils.strings.StringUtils;
 import com.whatscloud.utils.networking.HTTP;
 import com.whatscloud.utils.objects.Singleton;
@@ -66,6 +67,44 @@ public class Main extends SherlockActivity
         //---------------------------------
 
         BugSenseHandler.initAndStartSession(this, BugSense.API_KEY);
+
+        //--------------------------------
+        // Make sure we have root!
+        //--------------------------------
+
+        if (!RootTools.isRootAvailable())
+        {
+            //---------------------------------
+            // Show error
+            //---------------------------------
+
+            showNoRootScreen();
+
+            //---------------------------------
+            // Stop execution
+            //---------------------------------
+
+            return;
+        }
+
+        //---------------------------------
+        // No WhatsApp?
+        //---------------------------------
+
+        if ( ! isWhatsAppInstalled() )
+        {
+            //---------------------------------
+            // Go to market
+            //---------------------------------
+
+            downloadWhatsApp();
+
+            //---------------------------------
+            // Stop execution
+            //---------------------------------
+
+            return;
+        }
 
         //---------------------------------
         // Verify WhatsApp is installed
@@ -187,6 +226,21 @@ public class Main extends SherlockActivity
 
         //-----------------------------
         // Finish up
+        //-----------------------------
+
+        finish();
+    }
+
+    void showNoRootScreen()
+    {
+        //-----------------------------
+        // Start splash activity
+        //-----------------------------
+
+        startActivity(new Intent().setClass(Main.this, NoRoot.class));
+
+        //-----------------------------
+        // Exit this one
         //-----------------------------
 
         finish();
