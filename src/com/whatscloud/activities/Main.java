@@ -25,6 +25,8 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.whatscloud.R;
+import com.whatscloud.activities.tutorial.DeleteAccount;
+import com.whatscloud.activities.tutorial.NoRoot;
 import com.whatscloud.activities.tutorial.SuperuserTutorial;
 import com.whatscloud.config.ads.AdMob;
 import com.whatscloud.config.app.WhatsCloud;
@@ -51,6 +53,7 @@ public class Main extends SherlockActivity
     RelativeLayout mAdContainer;
 
     public static int MENU_SIGN_OUT = 1;
+    public static int MENU_DELETE_ACCOUNT = 3;
     public static int MENU_SUPERUSER_TUTORIAL = 2;
 
     @Override
@@ -819,6 +822,21 @@ public class Main extends SherlockActivity
         startActivity(new Intent().setClass(Main.this, SuperuserTutorial.class));
     }
 
+    void deleteAccountScreen()
+    {
+        //-----------------------------
+        // Start activity
+        //-----------------------------
+
+        startActivity(new Intent().setClass(Main.this, DeleteAccount.class));
+
+        //-----------------------------
+        // Done
+        //-----------------------------
+
+        finish();
+    }
+
     void initializeUI()
     {
         //-----------------------------
@@ -892,6 +910,7 @@ public class Main extends SherlockActivity
 
         menu.add(0, MENU_SIGN_OUT, 0, getString(R.string.signOut));
         menu.add(0, MENU_SUPERUSER_TUTORIAL, 0, getString(R.string.tutorialItem));
+        menu.add(0, MENU_DELETE_ACCOUNT, 0, getString(R.string.deleteAccount));
 
         //--------------------------------
         // Handled
@@ -932,6 +951,25 @@ public class Main extends SherlockActivity
             //--------------------------------
 
             superuserTutorialScreen();
+
+            //--------------------------------
+            // Handle event
+            //--------------------------------
+
+            return true;
+        }
+
+        //--------------------------------
+        // Did we click delete account?
+        //--------------------------------
+
+        else if (item.getItemId() == MENU_DELETE_ACCOUNT)
+        {
+            //--------------------------------
+            // Show delete account
+            //--------------------------------
+
+            deleteAccountScreen();
 
             //--------------------------------
             // Handle event

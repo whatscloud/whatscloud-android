@@ -229,7 +229,7 @@ public class SignIn extends SherlockActivity
         }
     }
 
-    void signInScreen() throws Exception
+    void signIn() throws Exception
     {
         //---------------------------------
         // Get e-mail and password
@@ -415,7 +415,7 @@ public class SignIn extends SherlockActivity
 
             try
             {
-                signInScreen();
+                signIn();
             }
             catch( Exception exc )
             {

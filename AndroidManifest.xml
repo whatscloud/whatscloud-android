@@ -59,10 +59,16 @@
                   android:theme="@style/Theme.WhatsCloud"
                   android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
-        <activity android:name=".activities.NoRoot"
+        <activity android:name=".activities.tutorial.NoRoot"
                   android:launchMode="singleTask"
                   android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"
                   android:label="@string/whatscloud"
+                  android:theme="@style/Theme.WhatsCloud"
+                  android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity android:name=".activities.tutorial.DeleteAccount"
+                  android:launchMode="singleTask"
+                  android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"
+                  android:label="@string/deleteAccount"
                   android:theme="@style/Theme.WhatsCloud"
                   android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>

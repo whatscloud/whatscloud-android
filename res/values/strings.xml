@@ -17,7 +17,7 @@
     <string name="pushErrorDesc">An error occurred while registering your device for push notifications.\n\nPlease try again
         later.
     </string>
-    <string name="signOut">Sign out</string>
+    <string name="signOut">Sign Out</string>
     <string name="syncFailed">Sync Failed</string>
     <string name="syncFailedDesc">\n\nPlease contact us at whatscloudapp@gmail.com and we will help you fix this.</string>
     <string name="signUp">Sign Up</string>
@@ -84,4 +84,7 @@
     <string name="noRootDesc">We need permanent root access to sync your messages to our service, to make them available online.\n\nYou will <b>not</b> be able to use WhatsCloud without rooting your device.</string>
     <string name="noRootLink">Click here to learn more about rooting</string>
     <string name="learnMore">Learn More</string>
+    <string name="deleteAccount">Delete Account</string>
+    <string name="deleteDesc">Click the button below to permanently delete your WhatsCloud account and all synced data.</string>
+    <string name="deleteIntro">Sorry to see you go!</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.whatscloud.activities;
+package com.whatscloud.activities.tutorial;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -7,7 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
+
 import com.actionbarsherlock.app.SherlockActivity;
 import com.bugsense.trace.BugSenseHandler;
 import com.whatscloud.R;
@@ -17,7 +17,7 @@ import com.whatscloud.ui.dialogs.DialogManager;
 
 public class NoRoot extends SherlockActivity
 {
-    Button learnMore;
+    Button mLearnMore;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -49,7 +49,7 @@ public class NoRoot extends SherlockActivity
         // Cache view
         //-----------------------------
 
-        learnMore = (Button)findViewById(R.id.noRootLink);
+        mLearnMore = (Button)findViewById(R.id.noRootLink);
 
         //-----------------------------
         // Set up on click listeners
@@ -64,7 +64,7 @@ public class NoRoot extends SherlockActivity
         // Sign in button onclick
         //-----------------------------
 
-        learnMore.setOnClickListener(new View.OnClickListener()
+        mLearnMore.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
@@ -75,9 +75,9 @@ public class NoRoot extends SherlockActivity
 
                 try
                 {
-                    startActivity( new Intent(Intent.ACTION_VIEW, Uri.parse(WhatsCloud.ROOT_URL) ) );
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(WhatsCloud.ROOT_URL)));
                 }
-                catch( Exception exc )
+                catch (Exception exc)
                 {
                     //-----------------------------
                     // Show error dialog
